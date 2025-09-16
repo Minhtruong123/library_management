@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thư viện Thông minh</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <h1><i class="fas fa-book-open"></i> Thư viện Thông minh</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html" class="active">Trang chủ</a></li>
+            <li><a href="books.html">Sách</a></li>
+            <li><a href="categories.html">Danh mục</a></li>
+            <li><a href="myaccount.html">Tài khoản</a></li>
+            <li><a href="login.html" class="btn-login">Đăng nhập</a></li>
+          </ul>
+        </nav>
+        <div class="mobile-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h2>Khám phá thế giới tri thức</h2>
+          <p>
+            Hơn 10,000 đầu sách trong nhiều lĩnh vực khác nhau đang chờ bạn khám
+            phá
+          </p>
+          <div class="search-box">
+            <input
+              type="text"
+              placeholder="Tìm kiếm sách, tác giả, danh mục..."
+            />
+            <button><i class="fas fa-search"></i></button>
+          </div>
+          <div class="featured-categories">
+            <span>Danh mục nổi bật:</span>
+            <a href="#">Văn học</a>
+            <a href="#">Khoa học</a>
+            <a href="#">Kinh tế</a>
+            <a href="#">Tâm lý học</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="feature-item">
+          <i class="fas fa-book"></i>
+          <h3>10,000+ Sách</h3>
+          <p>Đa dạng thể loại và chủ đề</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-robot"></i>
+          <h3>Trợ lý AI</h3>
+          <p>Hỗ trợ tìm kiếm và gợi ý sách phù hợp</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-mobile-alt"></i>
+          <h3>Đa nền tảng</h3>
+          <p>Truy cập mọi lúc, mọi nơi</p>
+        </div>
+        <div class="feature-item">
+          <i class="fas fa-clock"></i>
+          <h3>24/7</h3>
+          <p>Hỗ trợ mọi lúc bạn cần</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="new-books">
+      <div class="container">
+        <h2 class="section-title">Sách mới</h2>
+        <div class="books-grid">
+          <div class="book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/150x220" alt="Sách 1" />
+            </div>
+            <div class="book-info">
+              <h3>Nghệ thuật tinh tế của việc đếch quan tâm</h3>
+              <p class="author">Mark Manson</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.5</span>
+                <span><i class="fas fa-layer-group"></i> Tâm lý học</span>
+              </div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+          <!-- Thêm các sách khác tương tự -->
+          <div class="book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/150x220" alt="Sách 2" />
+            </div>
+            <div class="book-info">
+              <h3>Đắc nhân tâm</h3>
+              <p class="author">Dale Carnegie</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.8</span>
+                <span><i class="fas fa-layer-group"></i> Kỹ năng sống</span>
+              </div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/150x220" alt="Sách 3" />
+            </div>
+            <div class="book-info">
+              <h3>Sapiens: Lược sử loài người</h3>
+              <p class="author">Yuval Noah Harari</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.7</span>
+                <span><i class="fas fa-layer-group"></i> Lịch sử</span>
+              </div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+          <div class="book-card">
+            <div class="book-cover">
+              <img src="https://via.placeholder.com/150x220" alt="Sách 4" />
+            </div>
+            <div class="book-info">
+              <h3>Atomic Habits</h3>
+              <p class="author">James Clear</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.9</span>
+                <span
+                  ><i class="fas fa-layer-group"></i> Phát triển bản thân</span
+                >
+              </div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+        </div>
+        <div class="center">
+          <a href="books.html" class="btn-view-all">Xem tất cả</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ai-assistant">
+      <div class="container">
+        <div class="ai-assistant-content">
+          <div class="ai-info">
+            <h2>Trợ lý AI thông minh</h2>
+            <p>
+              Trợ lý AI của chúng tôi luôn sẵn sàng hỗ trợ bạn tìm kiếm sách,
+              giải đáp thắc mắc về thư viện, và gợi ý những cuốn sách phù hợp
+              với sở thích của bạn.
+            </p>
+            <ul>
+              <li><i class="fas fa-check"></i> Tìm kiếm sách nhanh chóng</li>
+              <li><i class="fas fa-check"></i> Gợi ý sách dựa trên sở thích</li>
+              <li><i class="fas fa-check"></i> Trả lời câu hỏi về thư viện</li>
+              <li><i class="fas fa-check"></i> Hỗ trợ đặt và gia hạn sách</li>
+            </ul>
+            <button class="btn-try-ai" onclick="openChatbot()">
+              Trò chuyện ngay
+            </button>
+          </div>
+          <div class="ai-image">
+            <img src="https://via.placeholder.com/500x400" alt="AI Assistant" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="chatbot-container" id="chatbot">
+      <div class="chatbot-header">
+        <h3><i class="fas fa-robot"></i> Trợ lý thư viện</h3>
+        <button onclick="closeChatbot()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="message bot">
+          <div class="message-content">
+            Xin chào! Tôi là trợ lý AI của thư viện. Tôi có thể giúp gì cho bạn
+            hôm nay? Bạn có thể hỏi tôi về:
+            <ul>
+              <li>Tìm kiếm sách theo tên, tác giả, thể loại</li>
+              <li>Thông tin về quy trình mượn/trả sách</li>
+              <li>Gợi ý sách theo sở thích</li>
+              <li>Trạng thái đặt sách của bạn</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="chatbot-input">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Nhập câu hỏi của bạn..."
+        />
+        <button onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <section class="how-it-works">
+      <div class="container">
+        <h2 class="section-title">Cách mượn sách</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-icon">
+              <i class="fas fa-search"></i>
+            </div>
+            <h3>Tìm sách</h3>
+            <p>Tìm kiếm sách yêu thích từ bộ sưu tập đa dạng của chúng tôi</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Đặt trước</h3>
+            <p>Đặt sách trực tuyến hoặc sử dụng trợ lý AI để đặt</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">
+              <i class="fas fa-book-reader"></i>
+            </div>
+            <h3>Nhận sách</h3>
+            <p>Đến thư viện và nhận sách từ quầy phục vụ</p>
+          </div>
+          <div class="step">
+            <div class="step-icon">
+              <i class="fas fa-undo"></i>
+            </div>
+            <h3>Trả sách</h3>
+            <p>Trả sách đúng hạn hoặc gia hạn trực tuyến</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Thư viện Thông minh</h3>
+            <p>
+              Nơi kết nối tri thức và công nghệ, mang đến trải nghiệm đọc sách
+              tốt nhất cho bạn.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+              <li><a href="#">Trang chủ</a></li>
+              <li><a href="#">Sách</a></li>
+              <li><a href="#">Danh mục</a></li>
+              <li><a href="#">Tài khoản</a></li>
+              <li><a href="#">Giới thiệu</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Q.1, TP.HCM
+            </p>
+            <p><i class="fas fa-phone"></i> (028) 1234 5678</p>
+            <p><i class="fas fa-envelope"></i> info@thuvienthongminh.vn</p>
+          </div>
+          <div class="footer-section">
+            <h3>Giờ làm việc</h3>
+            <p>Thứ Hai - Thứ Sáu: 8:00 - 21:00</p>
+            <p>Thứ Bảy: 9:00 - 19:00</p>
+            <p>Chủ Nhật: 9:00 - 17:00</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Thư viện Thông minh. Tất cả quyền được bảo lưu.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

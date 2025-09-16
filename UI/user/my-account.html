@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tài khoản của tôi - Thư viện Thông minh</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .account-section {
+        padding: 80px 0;
+        background-color: #f8f9fa;
+        min-height: calc(100vh - 300px);
+      }
+
+      .account-container {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 30px;
+      }
+
+      .account-sidebar {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+      }
+
+      .user-info {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .user-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        overflow: hidden;
+        border: 3px solid var(--secondary-color);
+      }
+
+      .user-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .user-name {
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      .user-id {
+        color: var(--gray-color);
+        font-size: 0.9rem;
+      }
+
+      .membership-status {
+        display: inline-block;
+        background-color: #2ecc71;
+        color: white;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        margin-top: 10px;
+      }
+
+      .sidebar-menu {
+        margin-bottom: 20px;
+      }
+
+      .sidebar-menu h3 {
+        font-size: 1rem;
+        color: var(--gray-color);
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .sidebar-menu ul li {
+        margin-bottom: 10px;
+      }
+
+      .sidebar-menu ul li a {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: var(--transition);
+        color: var(--text-color);
+      }
+
+      .sidebar-menu ul li a:hover,
+      .sidebar-menu ul li a.active {
+        background-color: #f0f7ff;
+        color: var(--secondary-color);
+      }
+
+      .sidebar-menu ul li a i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      .btn-logout {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 12px 15px;
+        border: none;
+        background-color: #f8f9fa;
+        color: var(--text-color);
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: var(--transition);
+      }
+
+      .btn-logout:hover {
+        background-color: #fee2e2;
+        color: #e53e3e;
+      }
+
+      .btn-logout i {
+        margin-right: 10px;
+      }
+
+      .account-content {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+      }
+
+      .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .content-header h2 {
+        font-size: 1.8rem;
+        color: var(--primary-color);
+      }
+
+      /* Dashboard */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .stat-card {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: var(--transition);
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--box-shadow);
+      }
+
+      .stat-icon {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px;
+        background-color: rgba(52, 152, 219, 0.1);
+        color: var(--secondary-color);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--primary-color);
+      }
+
+      .stat-label {
+        color: var(--gray-color);
+      }
+
+      .recent-books {
+        margin-bottom: 40px;
+      }
+
+      .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .section-header h3 {
+        font-size: 1.3rem;
+        color: var(--primary-color);
+      }
+
+      .view-all {
+        color: var(--secondary-color);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+      }
+
+      .view-all i {
+        margin-left: 5px;
+      }
+
+      .book-list {
+        border: 1px solid #eee;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .book-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        transition: var(--transition);
+      }
+
+      .book-item:last-child {
+        border-bottom: none;
+      }
+
+      .book-item:hover {
+        background-color: #f8f9fa;
+      }
+
+      .book-cover-small {
+        width: 60px;
+        height: 80px;
+        margin-right: 15px;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .book-cover-small img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .book-info-small {
+        flex: 1;
+      }
+
+      .book-info-small h4 {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+      }
+
+      .book-info-small .author-small {
+        color: var(--gray-color);
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+      }
+
+      .loan-status {
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .loan-status.borrowed {
+        background-color: #ebf5ff;
+        color: #3498db;
+      }
+
+      .loan-status.returned {
+        background-color: #f0fff4;
+        color: #48bb78;
+      }
+
+      .loan-status.overdue {
+        background-color: #fff5f5;
+        color: #e53e3e;
+      }
+
+      .book-actions {
+        margin-left: 15px;
+      }
+
+      .book-actions button {
+        background: none;
+        border: none;
+        color: var(--gray-color);
+        cursor: pointer;
+        padding: 5px;
+        margin-left: 5px;
+        transition: var(--transition);
+      }
+
+      .book-actions button:hover {
+        color: var(--secondary-color);
+      }
+
+      .notification-list {
+        margin-bottom: 10px;
+      }
+
+      .notification-item {
+        display: flex;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        transition: var(--transition);
+      }
+
+      .notification-item:last-child {
+        border-bottom: none;
+      }
+
+      .notification-item:hover {
+        background-color: #f8f9fa;
+      }
+
+      .notification-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        flex-shrink: 0;
+      }
+
+      .notification-icon.reminder {
+        background-color: #fff8e1;
+        color: #f39c12;
+      }
+
+      .notification-icon.overdue {
+        background-color: #fee2e2;
+        color: #e53e3e;
+      }
+
+      .notification-icon.success {
+        background-color: #f0fff4;
+        color: #48bb78;
+      }
+
+      .notification-content {
+        flex: 1;
+      }
+
+      .notification-content p {
+        margin-bottom: 5px;
+        line-height: 1.5;
+      }
+
+      .notification-time {
+        color: var(--gray-color);
+        font-size: 0.8rem;
+      }
+
+      .notification-actions button {
+        background: none;
+        border: none;
+        color: var(--gray-color);
+        cursor: pointer;
+        padding: 5px;
+        margin-left: 5px;
+        transition: var(--transition);
+      }
+
+      .notification-actions button:hover {
+        color: var(--secondary-color);
+      }
+
+      @media (max-width: 992px) {
+        .account-container {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 576px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <h1><i class="fas fa-book-open"></i> Thư viện Thông minh</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="books.html">Sách</a></li>
+            <li><a href="categories.html">Danh mục</a></li>
+            <li><a href="myaccount.html" class="active">Tài khoản</a></li>
+            <li><a href="login.html" class="btn-login">Đăng nhập</a></li>
+          </ul>
+        </nav>
+        <div class="mobile-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <section class="account-section">
+      <div class="container">
+        <div class="account-container">
+          <div class="account-sidebar">
+            <div class="user-info">
+              <div class="user-avatar">
+                <img
+                  src="https://via.placeholder.com/100x100"
+                  alt="User Avatar"
+                />
+              </div>
+              <h3 class="user-name">Nguyễn Văn A</h3>
+              <p class="user-id">ID: TV-2025-1234</p>
+              <span class="membership-status">Thành viên vàng</span>
+            </div>
+
+            <div class="sidebar-menu">
+              <h3>Tài khoản</h3>
+              <ul>
+                <li>
+                  <a href="#" class="active"
+                    ><i class="fas fa-tachometer-alt"></i> Bảng điều khiển</a
+                  >
+                </li>
+                <li>
+                  <a href="#"><i class="fas fa-user"></i> Thông tin cá nhân</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fas fa-key"></i> Đổi mật khẩu</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sidebar-menu">
+              <h3>Quản lý sách</h3>
+              <ul>
+                <li>
+                  <a href="#"><i class="fas fa-book"></i> Sách đang mượn</a>
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-history"></i> Lịch sử mượn sách</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-bookmark"></i> Sách đã đặt trước</a
+                  >
+                </li>
+                <li>
+                  <a href="#"><i class="fas fa-heart"></i> Sách yêu thích</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="sidebar-menu">
+              <h3>Khác</h3>
+              <ul>
+                <li>
+                  <a href="#"><i class="fas fa-bell"></i> Thông báo</a>
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-money-bill-wave"></i> Phí & Thanh toán</a
+                  >
+                </li>
+                <li>
+                  <a href="#"
+                    ><i class="fas fa-question-circle"></i> Trợ giúp</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <button class="btn-logout">
+              <i class="fas fa-sign-out-alt"></i> Đăng xuất
+            </button>
+          </div>
+
+          <div class="account-content">
+            <div class="content-header">
+              <h2>Bảng điều khiển</h2>
+              <p>Xin chào, Nguyễn Văn A!</p>
+            </div>
+
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Sách đang mượn</div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-bookmark"></i>
+                </div>
+                <div class="stat-value">2</div>
+                <div class="stat-label">Sách đã đặt trước</div>
+              </div>
+
+              <div class="stat-card">
+                <div class="stat-icon">
+                  <i class="fas fa-history"></i>
+                </div>
+                <div class="stat-value">28</div>
+                <div class="stat-label">Tổng sách đã mượn</div>
+              </div>
+            </div>
+
+            <div class="recent-books">
+              <div class="section-header">
+                <h3>Sách đang mượn</h3>
+                <a href="#" class="view-all"
+                  >Xem tất cả <i class="fas fa-chevron-right"></i
+                ></a>
+              </div>
+
+              <div class="book-list">
+                <div class="book-item">
+                  <div class="book-cover-small">
+                    <img
+                      src="https://via.placeholder.com/60x80"
+                      alt="Book Cover"
+                    />
+                  </div>
+                  <div class="book-info-small">
+                    <h4>Atomic Habits</h4>
+                    <p class="author-small">James Clear</p>
+                    <span class="loan-status borrowed"
+                      >Hạn trả: 25/09/2025</span
+                    >
+                  </div>
+                  <div class="book-actions">
+                    <button title="Gia hạn"><i class="fas fa-redo"></i></button>
+                    <button title="Chi tiết">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="book-item">
+                  <div class="book-cover-small">
+                    <img
+                      src="https://via.placeholder.com/60x80"
+                      alt="Book Cover"
+                    />
+                  </div>
+                  <div class="book-info-small">
+                    <h4>Đắc nhân tâm</h4>
+                    <p class="author-small">Dale Carnegie</p>
+                    <span class="loan-status overdue">Quá hạn: 2 ngày</span>
+                  </div>
+                  <div class="book-actions">
+                    <button title="Gia hạn"><i class="fas fa-redo"></i></button>
+                    <button title="Chi tiết">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="book-item">
+                  <div class="book-cover-small">
+                    <img
+                      src="https://via.placeholder.com/60x80"
+                      alt="Book Cover"
+                    />
+                  </div>
+                  <div class="book-info-small">
+                    <h4>Sapiens: Lược sử loài người</h4>
+                    <p class="author-small">Yuval Noah Harari</p>
+                    <span class="loan-status borrowed"
+                      >Hạn trả: 30/09/2025</span
+                    >
+                  </div>
+                  <div class="book-actions">
+                    <button title="Gia hạn"><i class="fas fa-redo"></i></button>
+                    <button title="Chi tiết">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="recent-books">
+              <div class="section-header">
+                <h3>Sách đã đặt trước</h3>
+                <a href="#" class="view-all"
+                  >Xem tất cả <i class="fas fa-chevron-right"></i
+                ></a>
+              </div>
+
+              <div class="book-list">
+                <div class="book-item">
+                  <div class="book-cover-small">
+                    <img
+                      src="https://via.placeholder.com/60x80"
+                      alt="Book Cover"
+                    />
+                  </div>
+                  <div class="book-info-small">
+                    <h4>Người giàu có nhất thành Babylon</h4>
+                    <p class="author-small">George S. Clason</p>
+                    <span class="loan-status borrowed"
+                      >Đang chờ: #2 trong hàng đợi</span
+                    >
+                  </div>
+                  <div class="book-actions">
+                    <button title="Hủy đặt">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <button title="Chi tiết">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="book-item">
+                  <div class="book-cover-small">
+                    <img
+                      src="https://via.placeholder.com/60x80"
+                      alt="Book Cover"
+                    />
+                  </div>
+                  <div class="book-info-small">
+                    <h4>Nhà giả kim</h4>
+                    <p class="author-small">Paulo Coelho</p>
+                    <span class="loan-status borrowed"
+                      >Sẵn sàng nhận: đến 20/09/2025</span
+                    >
+                  </div>
+                  <div class="book-actions">
+                    <button title="Hủy đặt">
+                      <i class="fas fa-times"></i>
+                    </button>
+                    <button title="Chi tiết">
+                      <i class="fas fa-info-circle"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="notifications">
+              <div class="section-header">
+                <h3>Thông báo gần đây</h3>
+                <a href="#" class="view-all"
+                  >Xem tất cả <i class="fas fa-chevron-right"></i
+                ></a>
+              </div>
+
+              <div class="notification-list">
+                <div class="notification-item">
+                  <div class="notification-icon overdue">
+                    <i class="fas fa-exclamation-circle"></i>
+                  </div>
+                  <div class="notification-content">
+                    <p>
+                      <strong>Sách quá hạn:</strong> "Đắc nhân tâm" đã quá hạn
+                      trả 2 ngày. Vui lòng trả sách hoặc gia hạn để tránh phí
+                      phạt.
+                    </p>
+                    <p class="notification-time">2 giờ trước</p>
+                  </div>
+                  <div class="notification-actions">
+                    <button><i class="fas fa-check"></i></button>
+                  </div>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon reminder">
+                    <i class="fas fa-bell"></i>
+                  </div>
+                  <div class="notification-content">
+                    <p>
+                      <strong>Nhắc nhở:</strong> "Atomic Habits" sẽ đến hạn trả
+                      vào ngày 25/09/2025.
+                    </p>
+                    <p class="notification-time">Hôm qua</p>
+                  </div>
+                  <div class="notification-actions">
+                    <button><i class="fas fa-check"></i></button>
+                  </div>
+                </div>
+
+                <div class="notification-item">
+                  <div class="notification-icon success">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <div class="notification-content">
+                    <p>
+                      <strong>Sách sẵn sàng:</strong> "Nhà giả kim" bạn đã đặt
+                      trước hiện đã có sẵn. Vui lòng đến thư viện để nhận sách
+                      trước ngày 20/09/2025.
+                    </p>
+                    <p class="notification-time">2 ngày trước</p>
+                  </div>
+                  <div class="notification-actions">
+                    <button><i class="fas fa-check"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="chatbot-container" id="chatbot">
+      <div class="chatbot-header">
+        <h3><i class="fas fa-robot"></i> Trợ lý thư viện</h3>
+        <button onclick="closeChatbot()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="message bot">
+          <div class="message-content">
+            Xin chào Nguyễn Văn A! Tôi là trợ lý AI của thư viện. Tôi có thể
+            giúp gì cho bạn hôm nay? Tôi thấy bạn có một cuốn sách quá hạn trả.
+            Bạn cần hỗ trợ gia hạn không?
+          </div>
+        </div>
+      </div>
+      <div class="chatbot-input">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Nhập câu hỏi của bạn..."
+        />
+        <button onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Thư viện Thông minh</h3>
+            <p>
+              Nơi kết nối tri thức và công nghệ, mang đến trải nghiệm đọc sách
+              tốt nhất cho bạn.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+              <li><a href="index.html">Trang chủ</a></li>
+              <li><a href="books.html">Sách</a></li>
+              <li><a href="categories.html">Danh mục</a></li>
+              <li><a href="myaccount.html">Tài khoản</a></li>
+              <li><a href="#">Giới thiệu</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Q.1, TP.HCM
+            </p>
+            <p><i class="fas fa-phone"></i> (028) 1234 5678</p>
+            <p><i class="fas fa-envelope"></i> info@thuvienthongminh.vn</p>
+          </div>
+          <div class="footer-section">
+            <h3>Giờ làm việc</h3>
+            <p>Thứ Hai - Thứ Sáu: 8:00 - 21:00</p>
+            <p>Thứ Bảy: 9:00 - 19:00</p>
+            <p>Chủ Nhật: 9:00 - 17:00</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Thư viện Thông minh. Tất cả quyền được bảo lưu.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
