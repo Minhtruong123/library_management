@@ -1,0 +1,116 @@
+.bookTabs {
+  border-top: 1px solid #eee;
+}
+
+.tabsNav {
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.tabLink {
+  padding: 15px 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tabLink.active {
+  color: var(--secondary-color);
+  border-bottom: 2px solid var(--secondary-color);
+}
+
+.tabContent {
+  padding: 40px;
+  min-height: 300px;
+}
+
+.description p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.detailsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.detailsTable tr {
+  border-bottom: 1px solid #eee;
+}
+
+.detailsTable tr:last-child {
+  border-bottom: none;
+}
+
+.detailsTable th,
+.detailsTable td {
+  padding: 15px 10px;
+  text-align: left;
+}
+
+.detailsTable th {
+  width: 30%;
+  color: var(--gray-color);
+}
+
+.reviewsContainer .review {
+  margin-bottom: 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.reviewsContainer .review:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.reviewerInfo {
+  display: flex;
+  align-items: center;
+}
+
+.reviewerAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.reviewerAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reviewerName {
+  font-weight: 500;
+}
+
+.reviewDate {
+  color: var(--gray-color);
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.reviewRating {
+  color: #f39c12;
+}
+
+.reviewContent {
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .tabLink {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+}

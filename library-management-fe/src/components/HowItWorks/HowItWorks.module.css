@@ -1,0 +1,92 @@
+.howItWorks {
+  padding: 80px 0;
+  background-color: white;
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.sectionTitle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--secondary-color);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.step {
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  transition: var(--transition);
+  position: relative;
+}
+
+.step:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: var(--gray-color);
+}
+
+.step:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--box-shadow);
+}
+
+.stepIcon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.step h3 {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.step p {
+  color: var(--gray-color);
+}
+
+@media (max-width: 1024px) {
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .step:not(:last-child)::after {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
