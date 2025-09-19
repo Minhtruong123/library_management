@@ -1,16 +1,21 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import HomePages from "./components/Pages/HomePages";
 import DetailsBook from "./components/Pages/DetailsBook";
+import AuthPage from "./components/Pages/AuthPage";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <DetailsBook />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePages />} />
+          <Route path="/books/:id" element={<DetailsBook />} />
+          <Route path="/auth" element={<AuthPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

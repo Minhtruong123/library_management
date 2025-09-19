@@ -1,0 +1,158 @@
+.loginContainer {
+  animation: fadeIn 0.5s ease;
+}
+
+.loginHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.loginHeader h2 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.loginForm .formGroup {
+  margin-bottom: 20px;
+}
+
+.loginForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--dark-color);
+  font-weight: 500;
+}
+
+.loginForm input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.loginForm input:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+.rememberMe {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.rememberMe input {
+  width: auto;
+  margin-right: 10px;
+}
+
+.btnLogin {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnLogin:hover {
+  background-color: #2980b9;
+}
+
+.loginFooter {
+  text-align: center;
+  margin-top: 25px;
+  color: var(--gray-color);
+}
+
+.loginFooter a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.loginFooter a:hover {
+  text-decoration: underline;
+}
+
+.socialLogin {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.socialLogin p {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.socialLogin p::before,
+.socialLogin p::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 35%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.socialLogin p::before {
+  left: 0;
+}
+
+.socialLogin p::after {
+  right: 0;
+}
+
+.socialLoginButtons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.socialBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.socialBtn.google {
+  background-color: #db4437;
+}
+
+.socialBtn.facebook {
+  background-color: #4267b2;
+}
+
+.socialBtn.twitter {
+  background-color: #1da1f2;
+}
+
+.socialBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

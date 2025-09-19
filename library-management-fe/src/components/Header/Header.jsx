@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Header.module.css";
+import { NavLink, Link, Route, Routes } from "react-router-dom";
 
 export default function Header() {
   const [isNavActive, setIsNavActive] = useState(false);
@@ -22,9 +23,14 @@ export default function Header() {
             >
               <ul>
                 <li>
-                  <a href="index.html" className={styles.active}>
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      isActive ? styles.active : undefined
+                    }
+                  >
                     Trang chủ
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
                   <a href="books.html">Sách</a>
@@ -36,9 +42,9 @@ export default function Header() {
                   <a href="myaccount.html">Tài khoản</a>
                 </li>
                 <li>
-                  <a href="login.html" className={styles.btnLogin}>
+                  <NavLink to="/auth" className={styles.btnLogin}>
                     Đăng nhập
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </nav>
