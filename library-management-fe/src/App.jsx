@@ -3,6 +3,7 @@ import "./App.css";
 import HomePages from "./components/Pages/HomePages";
 import DetailsBook from "./components/Pages/DetailsBook";
 import AuthPage from "./components/Pages/AuthPage";
+import AccountPage from "./components/Pages/AccountPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<HomePages />} />
           <Route path="/books/:id" element={<DetailsBook />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/myaccount" element={<AccountPage />} />
         </Routes>
       </BrowserRouter>
     </>

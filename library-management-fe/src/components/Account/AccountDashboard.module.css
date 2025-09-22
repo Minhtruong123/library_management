@@ -1,0 +1,77 @@
+/* AccountDashboard.module.css */
+.accountContent {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.contentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.contentHeader h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.recentBooks {
+  margin-bottom: 40px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sectionHeader h3 {
+  font-size: 1.3rem;
+  color: #2c3e50;
+}
+
+.viewAll {
+  color: #3498db;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.viewAll i {
+  margin-left: 5px;
+}
+
+.bookList {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.notificationList {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 992px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}

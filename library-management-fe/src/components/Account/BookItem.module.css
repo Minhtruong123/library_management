@@ -1,0 +1,85 @@
+/* BookItem.module.css */
+.bookItem {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.bookItem:last-child {
+  border-bottom: none;
+}
+
+.bookItem:hover {
+  background-color: #f8f9fa;
+}
+
+.bookCoverSmall {
+  width: 60px;
+  height: 80px;
+  margin-right: 15px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bookCoverSmall img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bookInfoSmall {
+  flex: 1;
+}
+
+.bookInfoSmall h4 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.bookInfoSmall .authorSmall {
+  color: #95a5a6;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.loanStatus {
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.loanStatus.borrowed {
+  background-color: #ebf5ff;
+  color: #3498db;
+}
+
+.loanStatus.returned {
+  background-color: #f0fff4;
+  color: #48bb78;
+}
+
+.loanStatus.overdue {
+  background-color: #fff5f5;
+  color: #e53e3e;
+}
+
+.bookActions {
+  margin-left: 15px;
+}
+
+.bookActions button {
+  background: none;
+  border: none;
+  color: #95a5a6;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 5px;
+  transition: all 0.3s ease;
+}
+
+.bookActions button:hover {
+  color: #3498db;
+}

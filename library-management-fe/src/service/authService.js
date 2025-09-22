@@ -19,6 +19,8 @@ export default api;
 
 export const login = async (values) => {
   try {
+    console.log(values);
+
     const result = await axios.post("http://localhost:8080/api/auth/login", {
       ...values,
     });

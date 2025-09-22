@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
+import * as authService from "../../service/authService";
 
 export default function Login({ onSwitchToRegister }) {
   const [formData, setFormData] = useState({
@@ -7,6 +8,9 @@ export default function Login({ onSwitchToRegister }) {
     password: "",
     rememberMe: false,
   });
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -16,10 +20,27 @@ export default function Login({ onSwitchToRegister }) {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login form submitted:", formData);
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await authService.login({
+        username: formData.username,
+        password: formData.password,
+      });
+
+      if (res?.data) {
+        window.location.href = "/";
+      }
+    } catch (err) {
+      setError("Sai tài khoản hoặc mật khẩu!");
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <>
       <div className={styles.loginContainer}>
@@ -65,9 +86,10 @@ export default function Login({ onSwitchToRegister }) {
             />
             <label htmlFor="rememberMe">Ghi nhớ đăng nhập</label>
           </div>
+          {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" className={styles.btnLogin}>
-            Đăng nhập
+          <button type="submit" className={styles.btnLogin} disabled={loading}>
+            {loading ? "Đang đăng nhập..." : "Đăng nhập"}
           </button>
         </form>
 
