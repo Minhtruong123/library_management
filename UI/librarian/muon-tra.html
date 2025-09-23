@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý mượn trả - Thư viện Thông minh</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #3a6ea5;
+        --secondary-color: #4a90e2;
+        --accent-color: #ff6b6b;
+        --background-color: #f8f9fa;
+        --dark-color: #343a40;
+        --light-color: #ffffff;
+        --border-color: #e1e5eb;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #dc3545;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--dark-color);
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background-color: var(--dark-color);
+        color: var(--light-color);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .sidebar-header {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      .sidebar-header h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .sidebar-header i {
+        margin-right: 10px;
+        color: var(--accent-color);
+      }
+
+      .sidebar-menu {
+        padding: 20px 0;
+      }
+
+      .menu-category {
+        padding: 0 20px;
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .sidebar-menu ul {
+        list-style: none;
+      }
+
+      .sidebar-menu li {
+        margin-bottom: 5px;
+      }
+
+      .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--light-color);
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .sidebar-menu i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Top Bar */
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        background-color: var(--light-color);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-toggle {
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+
+      .search-bar {
+        flex: 1;
+        max-width: 500px;
+        margin: 0 20px;
+        position: relative;
+      }
+
+      .search-bar input {
+        width: 100%;
+        padding: 10px 15px;
+        padding-left: 40px;
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar input:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
+
+      .search-bar i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .user-info .notifications {
+        margin-right: 20px;
+        position: relative;
+      }
+
+      .user-info .notifications i {
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #777;
+      }
+
+      .user-info .notifications .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--accent-color);
+        color: var(--light-color);
+        font-size: 0.7rem;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .user-profile img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+
+      .user-profile span {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      /* Content Area */
+      .content {
+        padding: 25px;
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .card {
+        background-color: var(--light-color);
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: 25px;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .card-header h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      .tabs {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .tab {
+        padding: 10px 20px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .tab.active {
+        color: var(--primary-color);
+        border-bottom: 3px solid var(--primary-color);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .filter {
+        display: flex;
+        align-items: center;
+      }
+
+      .filter label {
+        margin-right: 10px;
+        font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .filter select,
+      .filter input {
+        padding: 8px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 0.9rem;
+        outline: none;
+      }
+
+      .loan-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .loan-table th,
+      .loan-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .loan-table th {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #555;
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+
+      .loan-table tr:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+
+      .status {
+        padding: 5px 10px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: inline-block;
+      }
+
+      .status.active {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: var(--success-color);
+      }
+
+      .status.overdue {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: var(--danger-color);
+      }
+
+      .status.returned {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+      }
+
+      .status.reserved {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: var(--warning-color);
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+      }
+
+      .btn-primary:hover {
+        background-color: #2a5280;
+      }
+
+      .btn-secondary {
+        background-color: #e9ecef;
+        color: #495057;
+      }
+
+      .btn-secondary:hover {
+        background-color: #dde2e6;
+      }
+
+      .btn-warning {
+        background-color: var(--warning-color);
+        color: #212529;
+      }
+
+      .btn-warning:hover {
+        background-color: #e0a800;
+      }
+
+      .btn-success {
+        background-color: var(--success-color);
+        color: var(--light-color);
+      }
+
+      .btn-success:hover {
+        background-color: #218838;
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: var(--light-color);
+      }
+
+      .btn-danger:hover {
+        background-color: #c82333;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .pagination button {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border-color);
+        background-color: var(--light-color);
+        margin: 0 5px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      .pagination button.active {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        border-color: var(--primary-color);
+      }
+
+      .pagination button:hover:not(.active) {
+        background-color: #f1f3f4;
+      }
+
+      /* Modal */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        display: none;
+      }
+
+      .modal {
+        background-color: var(--light-color);
+        border-radius: 10px;
+        width: 500px;
+        max-width: 90%;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .modal-header h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      .modal-close {
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #777;
+      }
+
+      .modal-body {
+        padding: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 0.95rem;
+      }
+
+      .form-group textarea {
+        height: 100px;
+        resize: vertical;
+      }
+
+      .modal-footer {
+        padding: 15px 20px;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .summary-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .summary-item {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+      }
+
+      .summary-item h3 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--primary-color);
+      }
+
+      .summary-item p {
+        font-size: 0.9rem;
+        color: #6c757d;
+      }
+
+      @media (max-width: 992px) {
+        .sidebar {
+          width: 70px;
+        }
+
+        .sidebar-header h2,
+        .sidebar-menu span {
+          display: none;
+        }
+
+        .sidebar-header {
+          padding: 15px;
+          justify-content: center;
+        }
+
+        .sidebar-header i {
+          margin-right: 0;
+          font-size: 1.5rem;
+        }
+
+        .sidebar-menu a {
+          justify-content: center;
+          padding: 15px;
+        }
+
+        .sidebar-menu i {
+          margin-right: 0;
+          font-size: 1.2rem;
+        }
+
+        .menu-category {
+          text-align: center;
+          padding: 10px 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .search-bar {
+          display: none;
+        }
+
+        .user-profile span {
+          display: none;
+        }
+
+        .filters {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .summary-info {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .loan-table {
+          font-size: 0.8rem;
+        }
+
+        .actions {
+          flex-direction: column;
+          gap: 5px;
+        }
+
+        .btn {
+          padding: 5px 10px;
+          font-size: 0.8rem;
+        }
+
+        .summary-info {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-book"></i>
+          <h2>Thư viện Thông minh</h2>
+        </div>
+        <div class="sidebar-menu">
+          <div class="menu-category">Chính</div>
+          <ul>
+            <li>
+              <a href="#"><i class="fas fa-home"></i> <span>Tổng quan</span></a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-book"></i> <span>Sách</span></a>
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-users"></i> <span>Thành viên</span></a
+              >
+            </li>
+            <li>
+              <a href="#" class="active"
+                ><i class="fas fa-exchange-alt"></i> <span>Mượn trả</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-calendar-alt"></i> <span>Đặt lịch</span></a
+              >
+            </li>
+          </ul>
+          <div class="menu-category">Quản lý</div>
+          <ul>
+            <li>
+              <a href="#"
+                ><i class="fas fa-th-large"></i> <span>Danh mục</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-building"></i> <span>Nhà xuất bản</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-pen-fancy"></i> <span>Tác giả</span></a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-bell"></i> <span>Thông báo</span></a>
+            </li>
+          </ul>
+          <div class="menu-category">Cài đặt</div>
+          <ul>
+            <li>
+              <a href="#"><i class="fas fa-cog"></i> <span>Thiết lập</span></a>
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Top Bar -->
+        <div class="topbar">
+          <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Tìm kiếm sách, thành viên..." />
+          </div>
+          <div class="user-info">
+            <div class="notifications">
+              <i class="far fa-bell"></i>
+              <span class="badge">3</span>
+            </div>
+            <div class="user-profile">
+              <img
+                src="https://randomuser.me/api/portraits/men/85.jpg"
+                alt="Người dùng"
+              />
+              <span>Quản trị viên</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+          <h1>Quản lý mượn trả</h1>
+          <p style="margin-bottom: 20px; color: #777">
+            Quản lý thông tin mượn trả sách của thư viện
+          </p>
+
+          <!-- Summary Cards -->
+          <div class="summary-info">
+            <div class="summary-item">
+              <h3>156</h3>
+              <p>Sách đang mượn</p>
+            </div>
+            <div class="summary-item">
+              <h3>24</h3>
+              <p>Quá hạn</p>
+            </div>
+            <div class="summary-item">
+              <h3>32</h3>
+              <p>Đặt trước</p>
+            </div>
+            <div class="summary-item">
+              <h3>85</h3>
+              <p>Trả trong tuần</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2>Danh sách mượn trả</h2>
+              <button class="btn btn-primary" id="newLoanBtn">
+                <i class="fas fa-plus"></i> Thêm phiếu mượn
+              </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+              <div class="tab active" data-tab="all">Tất cả</div>
+              <div class="tab" data-tab="active">Đang mượn</div>
+              <div class="tab" data-tab="overdue">Quá hạn</div>
+              <div class="tab" data-tab="returned">Đã trả</div>
+              <div class="tab" data-tab="reserved">Đặt trước</div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+              <div class="filter">
+                <label for="memberFilter">Thành viên:</label>
+                <select id="memberFilter">
+                  <option value="">Tất cả</option>
+                  <option value="1">Nguyễn Văn A</option>
+                  <option value="2">Trần Thị B</option>
+                  <option value="3">Lê Văn C</option>
+                </select>
+              </div>
+              <div class="filter">
+                <label for="dateFilter">Từ ngày:</label>
+                <input type="date" id="dateFilter" />
+              </div>
+              <div class="filter">
+                <label for="dateToFilter">Đến ngày:</label>
+                <input type="date" id="dateToFilter" />
+              </div>
+              <div class="filter">
+                <button class="btn btn-primary">
+                  <i class="fas fa-filter"></i> Lọc
+                </button>
+                <button class="btn btn-secondary" style="margin-left: 10px">
+                  <i class="fas fa-sync-alt"></i> Đặt lại
+                </button>
+              </div>
+            </div>
+
+            <!-- Loan Table -->
+            <div class="tab-content active" id="all-tab">
+              <table class="loan-table">
+                <thead>
+                  <tr>
+                    <th>Mã phiếu</th>
+                    <th>Thành viên</th>
+                    <th>Sách</th>
+                    <th>Ngày mượn</th>
+                    <th>Hạn trả</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>PM001</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>Dế Mèn Phiêu Lưu Ký</td>
+                    <td>15/09/2025</td>
+                    <td>05/10/2025</td>
+                    <td><span class="status active">Đang mượn</span></td>
+                    <td class="actions">
+                      <button class="btn btn-success return-btn">
+                        <i class="fas fa-undo"></i> Trả
+                      </button>
+                      <button class="btn btn-warning">
+                        <i class="fas fa-clock"></i> Gia hạn
+                      </button>
+                      <button class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Chi tiết
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>PM002</td>
+                    <td>Trần Thị B</td>
+                    <td>Đắc Nhân Tâm</td>
+                    <td>05/09/2025</td>
+                    <td>15/09/2025</td>
+                    <td><span class="status overdue">Quá hạn</span></td>
+                    <td class="actions">
+                      <button class="btn btn-success return-btn">
+                        <i class="fas fa-undo"></i> Trả
+                      </button>
+                      <button class="btn btn-warning">
+                        <i class="fas fa-clock"></i> Gia hạn
+                      </button>
+                      <button class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Chi tiết
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>PM003</td>
+                    <td>Lê Văn C</td>
+                    <td>Nhà Giả Kim</td>
+                    <td>01/09/2025</td>
+                    <td>15/09/2025</td>
+                    <td><span class="status active">Đang mượn</span></td>
+                    <td class="actions">
+                      <button class="btn btn-success return-btn">
+                        <i class="fas fa-undo"></i> Trả
+                      </button>
+                      <button class="btn btn-warning">
+                        <i class="fas fa-clock"></i> Gia hạn
+                      </button>
+                      <button class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Chi tiết
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>PM004</td>
+                    <td>Phạm Thị D</td>
+                    <td>Sách Giáo Khoa Toán Học 12</td>
+                    <td>30/08/2025</td>
+                    <td>14/09/2025</td>
+                    <td><span class="status returned">Đã trả</span></td>
+                    <td class="actions">
+                      <button class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Chi tiết
+                      </button>
+                      <button class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Xóa
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>PM005</td>
+                    <td>Hoàng Văn E</td>
+                    <td>Tôi thấy hoa vàng trên cỏ xanh</td>
+                    <td>20/09/2025</td>
+                    <td>10/10/2025</td>
+                    <td><span class="status active">Đang mượn</span></td>
+                    <td class="actions">
+                      <button class="btn btn-success return-btn">
+                        <i class="fas fa-undo"></i> Trả
+                      </button>
+                      <button class="btn btn-warning">
+                        <i class="fas fa-clock"></i> Gia hạn
+                      </button>
+                      <button class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Chi tiết
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>PM006</td>
+                    <td>Lý Thị F</td>
+                    <td>Bố Già</td>
+                    <td>10/09/2025</td>
+                    <td>24/09/2025</td>
+                    <td><span class="status returned">Đã trả</span></td>
+                    <td class="actions">
+                      <button class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Chi tiết
+                      </button>
+                      <button class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Xóa
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>PM007</td>
+                    <td>Trương Văn G</td>
+                    <td>Chiến Tranh và Hòa Bình</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td><span class="status reserved">Đặt trước</span></td>
+                    <td class="actions">
+                      <button class="btn btn-primary">
+                        <i class="fas fa-check"></i> Xác nhận
+                      </button>
+                      <button class="btn btn-danger">
+                        <i class="fas fa-times"></i> Hủy
+                      </button>
+                      <button class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Chi tiết
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Pagination -->
+              <div class="pagination">
+                <button><i class="fas fa-chevron-left"></i></button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button><i class="fas fa-chevron-right"></i></button>
+              </div>
+            </div>
+
+            <!-- Other Tabs Content -->
+            <div class="tab-content" id="active-tab">
+              <!-- Active loans will appear here -->
+            </div>
+
+            <div class="tab-content" id="overdue-tab">
+              <!-- Overdue loans will appear here -->
+            </div>
+
+            <div class="tab-content" id="returned-tab">
+              <!-- Returned loans will appear here -->
+            </div>
+
+            <div class="tab-content" id="reserved-tab">
+              <!-- Reserved loans will appear here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Loan Modal -->
+    <div class="modal-overlay" id="newLoanModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Thêm phiếu mượn mới</h3>
+          <div class="modal-close">&times;</div>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="memberSelect">Thành viên:</label>
+            <select id="memberSelect">
+              <option value="">Chọn thành viên</option>
+              <option value="1">Nguyễn Văn A</option>
+              <option value="2">Trần Thị B</option>
+              <option value="3">Lê Văn C</option>
+              <option value="4">Phạm Thị D</option>
+              <option value="5">Hoàng Văn E</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="bookSelect">Sách:</label>
+            <select id="bookSelect">
+              <option value="">Chọn sách</option>
+              <option value="1">Dế Mèn Phiêu Lưu Ký - Tô Hoài</option>
+              <option value="2">Đắc Nhân Tâm - Dale Carnegie</option>
+              <option value="3">Nhà Giả Kim - Paulo Coelho</option>
+              <option value="4">
+                Tôi thấy hoa vàng trên cỏ xanh - Nguyễn Nhật Ánh
+              </option>
+              <option value="5">Bố Già - Mario Puzo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="borrowDate">Ngày mượn:</label>
+            <input type="date" id="borrowDate" value="2025-09-23" />
+          </div>
+          <div class="form-group">
+            <label for="returnDate">Hạn trả:</label>
+            <input type="date" id="returnDate" value="2025-10-07" />
+          </div>
+          <div class="form-group">
+            <label for="note">Ghi chú:</label>
+            <textarea id="note" placeholder="Nhập ghi chú nếu có..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelLoanBtn">Hủy</button>
+          <button class="btn btn-primary" id="saveLoanBtn">Lưu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Return Book Modal -->
+    <div class="modal-overlay" id="returnBookModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Trả sách</h3>
+          <div class="modal-close">&times;</div>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Thông tin sách:</label>
+            <p id="returnBookInfo">
+              Dế Mèn Phiêu Lưu Ký (Mượn bởi: Nguyễn Văn A)
+            </p>
+          </div>
+          <div class="form-group">
+            <label for="returnCondition">Tình trạng sách:</label>
+            <select id="returnCondition">
+              <option value="good">Tốt</option>
+              <option value="damaged">Hư hỏng nhẹ</option>
+              <option value="severe">Hư hỏng nặng</option>
+              <option value="lost">Mất sách</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fineAmount">Tiền phạt (nếu có):</label>
+            <input type="number" id="fineAmount" value="0" min="0" />
+          </div>
+          <div class="form-group">
+            <label for="returnNote">Ghi chú:</label>
+            <textarea
+              id="returnNote"
+              placeholder="Nhập ghi chú nếu có..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancelReturnBtn">Hủy</button>
+          <button class="btn btn-success" id="confirmReturnBtn">
+            Xác nhận trả
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Toggle Sidebar
+      document
+        .querySelector(".menu-toggle")
+        .addEventListener("click", function () {
+          document.querySelector(".sidebar").classList.toggle("collapsed");
+          document.querySelector(".main-content").classList.toggle("expanded");
+        });
+
+      // Tab Switching
+      const tabs = document.querySelectorAll(".tab");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Remove active class from all tabs
+          tabs.forEach((t) => t.classList.remove("active"));
+          // Add active class to clicked tab
+          tab.classList.add("active");
+
+          // Hide all tab contents
+          const tabContents = document.querySelectorAll(".tab-content");
+          tabContents.forEach((content) => content.classList.remove("active"));
+
+          // Show the selected tab content
+          const tabId = tab.getAttribute("data-tab") + "-tab";
+          document.getElementById(tabId).classList.add("active");
+        });
+      });
+
+      // New Loan Modal
+      const newLoanBtn = document.getElementById("newLoanBtn");
+      const newLoanModal = document.getElementById("newLoanModal");
+      const cancelLoanBtn = document.getElementById("cancelLoanBtn");
+      const saveLoanBtn = document.getElementById("saveLoanBtn");
+      const modalCloseButtons = document.querySelectorAll(".modal-close");
+
+      newLoanBtn.addEventListener("click", () => {
+        newLoanModal.style.display = "flex";
+      });
+
+      cancelLoanBtn.addEventListener("click", () => {
+        newLoanModal.style.display = "none";
+      });
+
+      saveLoanBtn.addEventListener("click", () => {
+        // Logic to save loan
+        alert("Phiếu mượn đã được lưu thành công!");
+        newLoanModal.style.display = "none";
+      });
+
+      // Return Book Modal
+      const returnButtons = document.querySelectorAll(".return-btn");
+      const returnBookModal = document.getElementById("returnBookModal");
+      const cancelReturnBtn = document.getElementById("cancelReturnBtn");
+      const confirmReturnBtn = document.getElementById("confirmReturnBtn");
+
+      returnButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          // Get loan info from the row
+          const row = e.target.closest("tr");
+          const memberName = row.cells[1].textContent;
+          const bookTitle = row.cells[2].textContent;
+
+          // Set the return book info
+          document.getElementById(
+            "returnBookInfo"
+          ).textContent = `${bookTitle} (Mượn bởi: ${memberName})`;
+
+          returnBookModal.style.display = "flex";
+        });
+      });
+
+      cancelReturnBtn.addEventListener("click", () => {
+        returnBookModal.style.display = "none";
+      });
+
+      confirmReturnBtn.addEventListener("click", () => {
+        // Logic to process book return
+        alert("Sách đã được trả thành công!");
+        returnBookModal.style.display = "none";
+      });
+
+      // Close modals when clicking the X button
+      modalCloseButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".modal-overlay").forEach((modal) => {
+            modal.style.display = "none";
+          });
+        });
+      });
+
+      // Close modals when clicking outside
+      window.addEventListener("click", (e) => {
+        document.querySelectorAll(".modal-overlay").forEach((modal) => {
+          if (e.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+
+      // Fine amount calculation based on condition
+      const returnCondition = document.getElementById("returnCondition");
+      const fineAmount = document.getElementById("fineAmount");
+
+      returnCondition.addEventListener("change", () => {
+        switch (returnCondition.value) {
+          case "good":
+            fineAmount.value = "0";
+            break;
+          case "damaged":
+            fineAmount.value = "50000";
+            break;
+          case "severe":
+            fineAmount.value = "100000";
+            break;
+          case "lost":
+            fineAmount.value = "200000";
+            break;
+        }
+      });
+    </script>
+  </body>
+</html>
