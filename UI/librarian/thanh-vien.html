@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thư viện Thông minh - Quản lý Thành viên</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #3a6ea5;
+        --secondary-color: #4a90e2;
+        --accent-color: #ff6b6b;
+        --background-color: #f8f9fa;
+        --dark-color: #343a40;
+        --light-color: #ffffff;
+        --border-color: #e1e5eb;
+        --success-color: #28a745;
+        --warning-color: #ffc107;
+        --danger-color: #dc3545;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--background-color);
+        color: var(--dark-color);
+      }
+
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 250px;
+        background-color: var(--dark-color);
+        color: var(--light-color);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .sidebar-header {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      .sidebar-header h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .sidebar-header i {
+        margin-right: 10px;
+        color: var(--accent-color);
+      }
+
+      .sidebar-menu {
+        padding: 20px 0;
+      }
+
+      .menu-category {
+        padding: 0 20px;
+        margin-bottom: 10px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .sidebar-menu ul {
+        list-style: none;
+      }
+
+      .sidebar-menu li {
+        margin-bottom: 5px;
+      }
+
+      .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--light-color);
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .sidebar-menu i {
+        margin-right: 10px;
+        width: 20px;
+        text-align: center;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Top Bar */
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 25px;
+        background-color: var(--light-color);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-toggle {
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+
+      .search-bar {
+        flex: 1;
+        max-width: 500px;
+        margin: 0 20px;
+        position: relative;
+      }
+
+      .search-bar input {
+        width: 100%;
+        padding: 10px 15px;
+        padding-left: 40px;
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-bar input:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+      }
+
+      .search-bar i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .user-info .notifications {
+        margin-right: 20px;
+        position: relative;
+      }
+
+      .user-info .notifications i {
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #777;
+      }
+
+      .user-info .notifications .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--accent-color);
+        color: var(--light-color);
+        font-size: 0.7rem;
+        width: 15px;
+        height: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .user-profile img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+
+      .user-profile span {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      /* Content Area */
+      .content {
+        padding: 25px;
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 25px;
+      }
+
+      .card {
+        background-color: var(--light-color);
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-card {
+        display: flex;
+        align-items: center;
+      }
+
+      .stat-card .icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(74, 144, 226, 0.1);
+        border-radius: 10px;
+        margin-right: 15px;
+      }
+
+      .stat-card .icon i {
+        font-size: 1.8rem;
+        color: var(--primary-color);
+      }
+
+      .stat-card .info h3 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .stat-card .info p {
+        font-size: 0.9rem;
+        color: #777;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .card-header h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      .card-header .more {
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+      }
+
+      .card-header .more i {
+        margin-left: 5px;
+      }
+
+      .book-list,
+      .loan-list,
+      .member-list {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .book-list th,
+      .loan-list th,
+      .member-list th,
+      .book-list td,
+      .loan-list td,
+      .member-list td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .book-list th,
+      .loan-list th,
+      .member-list th {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #555;
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+
+      .book-list tr:hover,
+      .loan-list tr:hover,
+      .member-list tr:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+
+      .book-list .status,
+      .loan-list .status,
+      .member-status {
+        padding: 5px 10px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .status.available,
+      .member-status.active {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: var(--success-color);
+      }
+
+      .status.borrowed,
+      .member-status.inactive {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: var(--warning-color);
+      }
+
+      .status.overdue,
+      .member-status.banned {
+        background-color: rgba(220, 53, 69, 0.1);
+        color: var(--danger-color);
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+      }
+
+      .btn-primary:hover {
+        background-color: #2a5280;
+      }
+
+      .btn-secondary {
+        background-color: #e9ecef;
+        color: #495057;
+      }
+
+      .btn-secondary:hover {
+        background-color: #dde2e6;
+      }
+
+      .btn-success {
+        background-color: var(--success-color);
+        color: var(--light-color);
+      }
+
+      .btn-success:hover {
+        background-color: #218838;
+      }
+
+      .btn-danger {
+        background-color: var(--danger-color);
+        color: var(--light-color);
+      }
+
+      .btn-danger:hover {
+        background-color: #c82333;
+      }
+
+      /* Timeline */
+      .timeline {
+        position: relative;
+        padding-left: 30px;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 0;
+        height: 100%;
+        width: 2px;
+        background-color: #e9ecef;
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .timeline-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -30px;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        border: 2px solid var(--light-color);
+      }
+
+      .timeline-item .time {
+        font-size: 0.8rem;
+        color: #777;
+        margin-bottom: 5px;
+      }
+
+      .timeline-item .activity {
+        font-size: 0.95rem;
+      }
+
+      .timeline-item .user {
+        font-weight: 500;
+        color: var(--primary-color);
+      }
+
+      /* Filter and Search Section */
+      .filter-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .filter-section .search-member {
+        flex: 1;
+        min-width: 250px;
+        max-width: 500px;
+        position: relative;
+      }
+
+      .filter-section .search-member input {
+        width: 100%;
+        padding: 10px 15px;
+        padding-left: 40px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 0.9rem;
+        outline: none;
+      }
+
+      .filter-section .search-member i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+
+      .filter-dropdown {
+        position: relative;
+        min-width: 180px;
+      }
+
+      .filter-dropdown select {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 0.9rem;
+        outline: none;
+        appearance: none;
+        background-color: var(--light-color);
+        cursor: pointer;
+      }
+
+      .filter-dropdown::after {
+        content: "\f107";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      .filter-section .actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      /* Member Form */
+      .member-form-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1010;
+      }
+
+      .member-form {
+        background-color: var(--light-color);
+        border-radius: 10px;
+        width: 100%;
+        max-width: 600px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .member-form h2 {
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 0.95rem;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        outline: none;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 15px;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      /* Member Profile */
+      .member-profile {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 25px;
+        margin-bottom: 25px;
+      }
+
+      .profile-info {
+        background-color: var(--light-color);
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .profile-name {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .profile-name h2 {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+      }
+
+      .profile-name p {
+        color: #777;
+      }
+
+      .profile-stats {
+        display: flex;
+        justify-content: space-around;
+        padding: 15px 0;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 20px;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-item h3 {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+      }
+
+      .stat-item p {
+        font-size: 0.85rem;
+        color: #777;
+      }
+
+      .profile-details {
+        margin-top: 20px;
+      }
+
+      .detail-item {
+        display: flex;
+        margin-bottom: 15px;
+      }
+
+      .detail-item i {
+        width: 25px;
+        color: var(--primary-color);
+        margin-right: 10px;
+      }
+
+      .profile-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .profile-tabs {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 20px;
+      }
+
+      .profile-tab {
+        padding: 10px 20px;
+        background-color: var(--light-color);
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .profile-tab.active {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      /* Pagination */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 25px;
+      }
+
+      .pagination-item {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        background-color: var(--light-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .pagination-item.active {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+      }
+
+      .pagination-item:hover:not(.active) {
+        background-color: #e9ecef;
+      }
+
+      /* Chatbot */
+      .chatbot-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+      }
+
+      .chatbot-button {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+      }
+
+      .chatbot-button:hover {
+        transform: scale(1.05);
+      }
+
+      .chatbot-button i {
+        font-size: 1.5rem;
+      }
+
+      .chatbot-window {
+        position: absolute;
+        bottom: 75px;
+        right: 0;
+        width: 350px;
+        height: 500px;
+        background-color: var(--light-color);
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        display: none;
+        flex-direction: column;
+      }
+
+      .chatbot-header {
+        padding: 15px;
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        display: flex;
+        align-items: center;
+      }
+
+      .chatbot-header .bot-avatar {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+      }
+
+      .chatbot-header h3 {
+        flex: 1;
+        font-size: 1.1rem;
+        font-weight: 500;
+      }
+
+      .chatbot-header .close-btn {
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+
+      .chat-messages {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+      }
+
+      .message {
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .message.bot {
+        align-items: flex-start;
+      }
+
+      .message.user {
+        align-items: flex-end;
+      }
+
+      .message .bubble {
+        max-width: 80%;
+        padding: 10px 15px;
+        border-radius: 15px;
+        font-size: 0.95rem;
+      }
+
+      .message.bot .bubble {
+        background-color: #f1f3f4;
+        border-bottom-left-radius: 5px;
+      }
+
+      .message.user .bubble {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        border-bottom-right-radius: 5px;
+      }
+
+      .message .time {
+        font-size: 0.75rem;
+        color: #999;
+        margin-top: 5px;
+      }
+
+      .chat-input {
+        padding: 15px;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 10px 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+        font-size: 0.95rem;
+        outline: none;
+      }
+
+      .chat-input button {
+        background-color: var(--primary-color);
+        color: var(--light-color);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-left: 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .sidebar {
+          width: 70px;
+        }
+
+        .sidebar-header h2,
+        .sidebar-menu span {
+          display: none;
+        }
+
+        .sidebar-header {
+          padding: 15px;
+          justify-content: center;
+        }
+
+        .sidebar-header i {
+          margin-right: 0;
+          font-size: 1.5rem;
+        }
+
+        .sidebar-menu a {
+          justify-content: center;
+          padding: 15px;
+        }
+
+        .sidebar-menu i {
+          margin-right: 0;
+          font-size: 1.2rem;
+        }
+
+        .menu-category {
+          text-align: center;
+          padding: 10px 0;
+        }
+
+        .member-profile {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .dashboard {
+          grid-template-columns: 1fr;
+        }
+
+        .search-bar {
+          display: none;
+        }
+
+        .user-profile span {
+          display: none;
+        }
+
+        .filter-section {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .filter-section .search-member,
+        .filter-dropdown {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-header">
+          <i class="fas fa-book"></i>
+          <h2>Thư viện Thông minh</h2>
+        </div>
+        <div class="sidebar-menu">
+          <div class="menu-category">Chính</div>
+          <ul>
+            <li>
+              <a href="#"><i class="fas fa-home"></i> <span>Tổng quan</span></a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-book"></i> <span>Sách</span></a>
+            </li>
+            <li>
+              <a href="#" class="active"
+                ><i class="fas fa-users"></i> <span>Thành viên</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-exchange-alt"></i> <span>Mượn trả</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-calendar-alt"></i> <span>Đặt lịch</span></a
+              >
+            </li>
+          </ul>
+          <div class="menu-category">Quản lý</div>
+          <ul>
+            <li>
+              <a href="#"
+                ><i class="fas fa-th-large"></i> <span>Danh mục</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-building"></i> <span>Nhà xuất bản</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-pen-fancy"></i> <span>Tác giả</span></a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-bell"></i> <span>Thông báo</span></a>
+            </li>
+          </ul>
+          <div class="menu-category">Cài đặt</div>
+          <ul>
+            <li>
+              <a href="#"><i class="fas fa-cog"></i> <span>Thiết lập</span></a>
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-user-shield"></i> <span>Phân quyền</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-sign-out-alt"></i> <span>Đăng xuất</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Top Bar -->
+        <div class="topbar">
+          <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Tìm kiếm sách, thành viên..." />
+          </div>
+          <div class="user-info">
+            <div class="notifications">
+              <i class="far fa-bell"></i>
+              <span class="badge">3</span>
+            </div>
+            <div class="user-profile">
+              <img
+                src="https://randomuser.me/api/portraits/men/85.jpg"
+                alt="Người dùng"
+              />
+              <span>Quản trị viên</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+          <h1>Quản lý Thành viên</h1>
+          <p style="margin-bottom: 20px; color: #777">
+            Quản lý thông tin và quyền truy cập của thành viên thư viện.
+          </p>
+
+          <!-- Stats Dashboard -->
+          <div class="dashboard">
+            <div class="card stat-card">
+              <div class="icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="info">
+                <h3>1,249</h3>
+                <p>Tổng thành viên</p>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="icon">
+                <i class="fas fa-user-check"></i>
+              </div>
+              <div class="info">
+                <h3>1,120</h3>
+                <p>Đang hoạt động</p>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="icon">
+                <i class="fas fa-user-clock"></i>
+              </div>
+              <div class="info">
+                <h3>129</h3>
+                <p>Không hoạt động</p>
+              </div>
+            </div>
+
+            <div class="card stat-card">
+              <div class="icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="info">
+                <h3>42</h3>
+                <p>Mới trong tháng</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filter and Search Section -->
+          <div class="filter-section">
+            <div class="search-member">
+              <i class="fas fa-search"></i>
+              <input type="text" placeholder="Tìm kiếm thành viên..." />
+            </div>
+            <div class="filter-dropdown">
+              <select>
+                <option>Tất cả trạng thái</option>
+                <option>Đang hoạt động</option>
+                <option>Không hoạt động</option>
+                <option>Bị cấm</option>
+              </select>
+            </div>
+            <div class="filter-dropdown">
+              <select>
+                <option>Tất cả nhóm</option>
+                <option>Sinh viên</option>
+                <option>Giáo viên</option>
+                <option>Nhân viên</option>
+                <option>Khác</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button id="addMemberBtn" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm thành viên
+              </button>
+              <button class="btn btn-secondary">
+                <i class="fas fa-file-export"></i> Xuất Excel
+              </button>
+            </div>
+          </div>
+
+          <!-- Members List -->
+          <div class="card" style="margin-bottom: 25px">
+            <div class="card-header">
+              <h2>Danh sách thành viên</h2>
+              <a href="#" class="more"
+                >Xem tất cả <i class="fas fa-chevron-right"></i
+              ></a>
+            </div>
+            <table class="member-list">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Họ và tên</th>
+                  <th>Email</th>
+                  <th>Số điện thoại</th>
+                  <th>Nhóm</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>TV001</td>
+                  <td>Nguyễn Văn An</td>
+                  <td>nguyenvanan@gmail.com</td>
+                  <td>0912345678</td>
+                  <td>Sinh viên</td>
+                  <td>
+                    <span class="member-status active">Đang hoạt động</span>
+                  </td>
+                  <td class="actions">
+                    <button
+                      class="btn btn-secondary view-member"
+                      data-id="TV001"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-primary edit-member" data-id="TV001">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger">
+                      <i class="fas fa-ban"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TV002</td>
+                  <td>Trần Thị Bình</td>
+                  <td>tranthibinh@gmail.com</td>
+                  <td>0987654321</td>
+                  <td>Giáo viên</td>
+                  <td>
+                    <span class="member-status active">Đang hoạt động</span>
+                  </td>
+                  <td class="actions">
+                    <button
+                      class="btn btn-secondary view-member"
+                      data-id="TV002"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-primary edit-member" data-id="TV002">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger">
+                      <i class="fas fa-ban"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TV003</td>
+                  <td>Lê Văn Cường</td>
+                  <td>levancuong@gmail.com</td>
+                  <td>0905123456</td>
+                  <td>Sinh viên</td>
+                  <td>
+                    <span class="member-status inactive">Không hoạt động</span>
+                  </td>
+                  <td class="actions">
+                    <button
+                      class="btn btn-secondary view-member"
+                      data-id="TV003"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-primary edit-member" data-id="TV003">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-success">
+                      <i class="fas fa-check"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TV004</td>
+                  <td>Phạm Thị Dung</td>
+                  <td>phamthidung@gmail.com</td>
+                  <td>0936789012</td>
+                  <td>Nhân viên</td>
+                  <td><span class="member-status banned">Bị cấm</span></td>
+                  <td class="actions">
+                    <button
+                      class="btn btn-secondary view-member"
+                      data-id="TV004"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-primary edit-member" data-id="TV004">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-success">
+                      <i class="fas fa-check"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TV005</td>
+                  <td>Hoàng Văn Em</td>
+                  <td>hoangvanem@gmail.com</td>
+                  <td>0978901234</td>
+                  <td>Sinh viên</td>
+                  <td>
+                    <span class="member-status active">Đang hoạt động</span>
+                  </td>
+                  <td class="actions">
+                    <button
+                      class="btn btn-secondary view-member"
+                      data-id="TV005"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-primary edit-member" data-id="TV005">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger">
+                      <i class="fas fa-ban"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TV006</td>
+                  <td>Ngô Thị Phương</td>
+                  <td>ngothiphuong@gmail.com</td>
+                  <td>0952345678</td>
+                  <td>Giáo viên</td>
+                  <td>
+                    <span class="member-status active">Đang hoạt động</span>
+                  </td>
+                  <td class="actions">
+                    <button
+                      class="btn btn-secondary view-member"
+                      data-id="TV006"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-primary edit-member" data-id="TV006">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger">
+                      <i class="fas fa-ban"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>TV007</td>
+                  <td>Vũ Văn Giang</td>
+                  <td>vuvangiang@gmail.com</td>
+                  <td>0908765432</td>
+                  <td>Sinh viên</td>
+                  <td>
+                    <span class="member-status inactive">Không hoạt động</span>
+                  </td>
+                  <td class="actions">
+                    <button
+                      class="btn btn-secondary view-member"
+                      data-id="TV007"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-primary edit-member" data-id="TV007">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-success">
+                      <i class="fas fa-check"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="pagination">
+              <div class="pagination-item">
+                <i class="fas fa-angle-left"></i>
+              </div>
+              <div class="pagination-item active">1</div>
+              <div class="pagination-item">2</div>
+              <div class="pagination-item">3</div>
+              <div class="pagination-item">...</div>
+              <div class="pagination-item">10</div>
+              <div class="pagination-item">
+                <i class="fas fa-angle-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activities -->
+          <div class="card">
+            <div class="card-header">
+              <h2>Hoạt động gần đây</h2>
+              <a href="#" class="more"
+                >Xem tất cả <i class="fas fa-chevron-right"></i
+              ></a>
+            </div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="time">22/09/2025, 14:35</div>
+                <div class="activity">
+                  <span class="user">Nguyễn Văn An</span> đã gia hạn thẻ thành
+                  viên thêm 1 năm
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="time">21/09/2025, 11:20</div>
+                <div class="activity">
+                  <span class="user">Admin</span> đã cập nhật thông tin của
+                  thành viên
+                  <strong>Trần Thị Bình</strong>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="time">20/09/2025, 09:45</div>
+                <div class="activity">
+                  <span class="user">Lê Văn Cường</span> đã hết hạn thẻ thành
+                  viên
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="time">19/09/2025, 16:30</div>
+                <div class="activity">
+                  <span class="user">Admin</span> đã thêm thành viên mới
+                  <strong>Đỗ Thị Hương</strong>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="time">18/09/2025, 10:15</div>
+                <div class="activity">
+                  <span class="user">Phạm Thị Dung</span> đã bị cấm do vi phạm
+                  quy định thư viện
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Member Form Overlay -->
+    <div class="member-form-overlay" id="memberFormOverlay">
+      <div class="member-form">
+        <h2>Thêm thành viên mới</h2>
+        <form id="memberForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">Họ</label>
+              <input type="text" id="firstName" name="firstName" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Tên</label>
+              <input type="text" id="lastName" name="lastName" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Số điện thoại</label>
+              <input type="tel" id="phone" name="phone" required />
+            </div>
+            <div class="form-group">
+              <label for="birthdate">Ngày sinh</label>
+              <input type="date" id="birthdate" name="birthdate" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address">Địa chỉ</label>
+            <input type="text" id="address" name="address" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="memberGroup">Nhóm thành viên</label>
+              <select id="memberGroup" name="memberGroup">
+                <option value="student">Sinh viên</option>
+                <option value="teacher">Giáo viên</option>
+                <option value="staff">Nhân viên</option>
+                <option value="other">Khác</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status">Trạng thái</label>
+              <select id="status" name="status">
+                <option value="active">Đang hoạt động</option>
+                <option value="inactive">Không hoạt động</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="notes">Ghi chú</label>
+            <textarea id="notes" name="notes" rows="3"></textarea>
+          </div>
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="cancelMemberBtn"
+            >
+              Hủy
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Lưu thành viên
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Member Profile Overlay -->
+    <div class="member-form-overlay" id="memberProfileOverlay">
+      <div class="member-form" style="max-width: 800px">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+          "
+        >
+          <h2>Thông tin thành viên</h2>
+          <button class="btn btn-secondary" id="closeProfileBtn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="member-profile">
+          <div class="profile-info">
+            <div class="profile-avatar">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                alt="Thành viên"
+              />
+            </div>
+            <div class="profile-name">
+              <h2>Nguyễn Văn An</h2>
+              <p>TV001 - Sinh viên</p>
+            </div>
+            <div class="profile-stats">
+              <div class="stat-item">
+                <h3>12</h3>
+                <p>Đã mượn</p>
+              </div>
+              <div class="stat-item">
+                <h3>2</h3>
+                <p>Đang mượn</p>
+              </div>
+              <div class="stat-item">
+                <h3>0</h3>
+                <p>Quá hạn</p>
+              </div>
+            </div>
+            <div class="profile-details">
+              <div class="detail-item">
+                <i class="fas fa-envelope"></i>
+                <span>nguyenvanan@gmail.com</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-phone"></i>
+                <span>0912345678</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-birthday-cake"></i>
+                <span>15/08/2000</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Nguyễn Trãi, Quận 1, TP.HCM</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-calendar-check"></i>
+                <span>Ngày đăng ký: 10/05/2023</span>
+              </div>
+              <div class="detail-item">
+                <i class="fas fa-clock"></i>
+                <span>Hạn thẻ: 10/05/2026</span>
+              </div>
+            </div>
+            <div class="profile-actions">
+              <button class="btn btn-primary">
+                <i class="fas fa-edit"></i> Chỉnh sửa
+              </button>
+              <button class="btn btn-secondary">
+                <i class="fas fa-id-card"></i> In thẻ thành viên
+              </button>
+              <button class="btn btn-danger">
+                <i class="fas fa-ban"></i> Khóa tài khoản
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="profile-tabs">
+              <div class="profile-tab active" data-tab="borrowing">
+                Đang mượn
+              </div>
+              <div class="profile-tab" data-tab="history">Lịch sử mượn</div>
+              <div class="profile-tab" data-tab="activity">Hoạt động</div>
+              <div class="profile-tab" data-tab="notes">Ghi chú</div>
+            </div>
+
+            <div class="tab-content active" id="borrowing">
+              <table class="book-list">
+                <thead>
+                  <tr>
+                    <th>Sách</th>
+                    <th>Ngày mượn</th>
+                    <th>Hạn trả</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dế Mèn Phiêu Lưu Ký</td>
+                    <td>15/09/2025</td>
+                    <td>29/09/2025</td>
+                    <td><span class="status borrowed">Đang mượn</span></td>
+                    <td class="actions">
+                      <button class="btn btn-primary">Gia hạn</button>
+                      <button class="btn btn-success">Trả sách</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Nhà Giả Kim</td>
+                    <td>10/09/2025</td>
+                    <td>24/09/2025</td>
+                    <td><span class="status borrowed">Đang mượn</span></td>
+                    <td class="actions">
+                      <button class="btn btn-primary">Gia hạn</button>
+                      <button class="btn btn-success">Trả sách</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-content" id="history">
+              <table class="book-list">
+                <thead>
+                  <tr>
+                    <th>Sách</th>
+                    <th>Ngày mượn</th>
+                    <th>Ngày trả</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Tôi Thấy Hoa Vàng Trên Cỏ Xanh</td>
+                    <td>01/08/2025</td>
+                    <td>15/08/2025</td>
+                    <td><span class="status available">Đã trả</span></td>
+                  </tr>
+                  <tr>
+                    <td>Đắc Nhân Tâm</td>
+                    <td>15/07/2025</td>
+                    <td>25/07/2025</td>
+                    <td><span class="status available">Đã trả</span></td>
+                  </tr>
+                  <tr>
+                    <td>Chí Phèo</td>
+                    <td>01/06/2025</td>
+                    <td>10/06/2025</td>
+                    <td><span class="status available">Đã trả</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tab-content" id="activity">
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="time">15/09/2025, 10:30</div>
+                  <div class="activity">
+                    Đã mượn sách <strong>Dế Mèn Phiêu Lưu Ký</strong>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="time">10/09/2025, 14:15</div>
+                  <div class="activity">
+                    Đã mượn sách <strong>Nhà Giả Kim</strong>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="time">15/08/2025, 16:45</div>
+                  <div class="activity">
+                    Đã trả sách <strong>Tôi Thấy Hoa Vàng Trên Cỏ Xanh</strong>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="time">01/08/2025, 09:20</div>
+                  <div class="activity">
+                    Đã mượn sách <strong>Tôi Thấy Hoa Vàng Trên Cỏ Xanh</strong>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="time">25/07/2025, 11:05</div>
+                  <div class="activity">
+                    Đã trả sách <strong>Đắc Nhân Tâm</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-content" id="notes">
+              <div class="form-group">
+                <label for="memberNotes">Ghi chú về thành viên</label>
+                <textarea
+                  id="memberNotes"
+                  rows="5"
+                  style="width: 100%; padding: 10px"
+                >
+Thành viên tích cực, thường xuyên mượn sách về văn học và kinh doanh. Luôn trả sách đúng hạn.</textarea
+                >
+              </div>
+              <button class="btn btn-primary" style="margin-top: 10px">
+                Lưu ghi chú
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+      <div class="chatbot-button">
+        <i class="fas fa-robot"></i>
+      </div>
+      <div class="chatbot-window">
+        <div class="chatbot-header">
+          <div class="bot-avatar">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h3>Trợ lý thư viện</h3>
+          <div class="close-btn">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
+        <div class="chat-messages">
+          <div class="message bot">
+            <div class="bubble">
+              Xin chào! Tôi là trợ lý AI của thư viện. Tôi có thể giúp bạn tìm
+              sách, kiểm tra tình trạng mượn/trả, hoặc trả lời các câu hỏi về
+              thư viện. Bạn cần giúp đỡ gì?
+            </div>
+            <div class="time">10:30</div>
+          </div>
+          <div class="message user">
+            <div class="bubble">Tôi muốn tìm sách về lập trình Python</div>
+            <div class="time">10:31</div>
+          </div>
+          <div class="message bot">
+            <div class="bubble">
+              Tôi đã tìm thấy 15 sách về Python trong thư viện. Một số sách nổi
+              bật bao gồm:
+              <br /><br />
+              1. "Python Crash Course" - Eric Matthes
+              <br />
+              2. "Automate the Boring Stuff with Python" - Al Sweigart
+              <br />
+              3. "Learning Python" - Mark Lutz
+              <br /><br />
+              Bạn muốn biết thêm chi tiết về quyển sách nào?
+            </div>
+            <div class="time">10:31</div>
+          </div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Nhập tin nhắn..." />
+          <button>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Toggle Sidebar
+      document
+        .querySelector(".menu-toggle")
+        .addEventListener("click", function () {
+          document.querySelector(".sidebar").classList.toggle("collapsed");
+          document.querySelector(".main-content").classList.toggle("expanded");
+        });
+
+      // Chatbot Toggle
+      document
+        .querySelector(".chatbot-button")
+        .addEventListener("click", function () {
+          const chatWindow = document.querySelector(".chatbot-window");
+          if (chatWindow.style.display === "flex") {
+            chatWindow.style.display = "none";
+          } else {
+            chatWindow.style.display = "flex";
+          }
+        });
+
+      // Close Chatbot
+      document
+        .querySelector(".close-btn")
+        .addEventListener("click", function () {
+          document.querySelector(".chatbot-window").style.display = "none";
+        });
+
+      // Add Member Form
+      document
+        .getElementById("addMemberBtn")
+        .addEventListener("click", function () {
+          document.getElementById("memberFormOverlay").style.display = "flex";
+        });
+
+      document
+        .getElementById("cancelMemberBtn")
+        .addEventListener("click", function () {
+          document.getElementById("memberFormOverlay").style.display = "none";
+        });
+
+      document
+        .getElementById("memberForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          // Here you would process the form data
+          alert("Thành viên đã được thêm thành công!");
+          document.getElementById("memberFormOverlay").style.display = "none";
+        });
+
+      // View Member Profile
+      const viewButtons = document.querySelectorAll(".view-member");
+      viewButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+          const memberId = this.getAttribute("data-id");
+          // Here you would fetch member data based on ID
+          document.getElementById("memberProfileOverlay").style.display =
+            "flex";
+        });
+      });
+
+      document
+        .getElementById("closeProfileBtn")
+        .addEventListener("click", function () {
+          document.getElementById("memberProfileOverlay").style.display =
+            "none";
+        });
+
+      // Profile Tabs
+      const profileTabs = document.querySelectorAll(".profile-tab");
+      profileTabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+          const tabId = this.getAttribute("data-tab");
+
+          // Remove active class from all tabs and contents
+          document.querySelectorAll(".profile-tab").forEach((t) => {
+            t.classList.remove("active");
+          });
+
+          document.querySelectorAll(".tab-content").forEach((c) => {
+            c.classList.remove("active");
+          });
+
+          // Add active class to current tab and content
+          this.classList.add("active");
+          document.getElementById(tabId).classList.add("active");
+        });
+      });
+
+      // Send Message
+      document
+        .querySelector(".chat-input button")
+        .addEventListener("click", sendMessage);
+      document
+        .querySelector(".chat-input input")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
+        });
+
+      function sendMessage() {
+        const input = document.querySelector(".chat-input input");
+        const message = input.value.trim();
+
+        if (message) {
+          // Add user message
+          addMessage("user", message);
+
+          // Clear input
+          input.value = "";
+
+          // Simulate bot response (you would replace this with actual AI response)
+          setTimeout(() => {
+            simulateBotResponse(message);
+          }, 1000);
+        }
+      }
+
+      function addMessage(sender, text) {
+        const chatMessages = document.querySelector(".chat-messages");
+        const now = new Date();
+        const time =
+          now.getHours() +
+          ":" +
+          (now.getMinutes() < 10 ? "0" : "") +
+          now.getMinutes();
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${sender}`;
+
+        messageDiv.innerHTML = `
+                <div class="bubble">${text}</div>
+                <div class="time">${time}</div>
+            `;
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function simulateBotResponse(userMessage) {
+        let botResponse = "";
+
+        // Simple pattern matching (in a real app, this would be your AI model)
+        if (
+          userMessage.toLowerCase().includes("xin chào") ||
+          userMessage.toLowerCase().includes("hello") ||
+          userMessage.toLowerCase().includes("hi")
+        ) {
+          botResponse = "Xin chào! Tôi có thể giúp gì cho bạn?";
+        } else if (userMessage.toLowerCase().includes("tìm sách")) {
+          botResponse =
+            "Để tìm sách, bạn có thể cho tôi biết tên sách, tác giả hoặc chủ đề bạn quan tâm.";
+        } else if (userMessage.toLowerCase().includes("mượn sách")) {
+          botResponse =
+            'Để mượn sách, bạn cần đăng nhập vào tài khoản thư viện của mình, tìm sách bạn muốn mượn và nhấn nút "Mượn". Bạn có thể mượn tối đa 5 quyển sách trong thời hạn 14 ngày.';
+        } else if (userMessage.toLowerCase().includes("trả sách")) {
+          botResponse =
+            "Bạn có thể trả sách trực tiếp tại thư viện hoặc sử dụng hộp trả sách tự động. Đừng quên trả sách đúng hạn để tránh phí phạt nhé!";
+        } else if (userMessage.toLowerCase().includes("gia hạn")) {
+          botResponse =
+            "Bạn có thể gia hạn sách đang mượn tối đa 2 lần, mỗi lần 7 ngày. Để gia hạn, vui lòng truy cập vào tài khoản của bạn và chọn sách cần gia hạn.";
+        } else {
+          botResponse =
+            "Tôi chưa hiểu rõ câu hỏi của bạn. Bạn có thể diễn đạt theo cách khác được không?";
+        }
+
+        addMessage("bot", botResponse);
+      }
+    </script>
+  </body>
+</html>
