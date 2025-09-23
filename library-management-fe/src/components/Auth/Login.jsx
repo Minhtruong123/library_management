@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css";
+import { AuthContext } from "../../service/AuthContext";
 import * as authService from "../../service/authService";
 
 export default function Login({ onSwitchToRegister }) {
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -32,6 +34,7 @@ export default function Login({ onSwitchToRegister }) {
       });
 
       if (res?.data) {
+        login(res.data.userResponse, res.data.token);
         window.location.href = "/";
       }
     } catch (err) {
