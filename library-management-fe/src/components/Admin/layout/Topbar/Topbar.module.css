@@ -1,0 +1,104 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: var(--light-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menuToggle {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.searchBar {
+  flex: 1;
+  max-width: 500px;
+  margin: 0 20px;
+  position: relative;
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 10px 15px;
+  padding-left: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.searchBar input:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.searchBar i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.userInfo .notifications {
+  margin-right: 20px;
+  position: relative;
+}
+
+.userInfo .notifications i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #777;
+}
+
+.userInfo .notifications .badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--accent-color);
+  color: var(--light-color);
+  font-size: 0.7rem;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userProfile img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.userProfile span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .searchBar {
+    display: none;
+  }
+
+  .userProfile span {
+    display: none;
+  }
+}

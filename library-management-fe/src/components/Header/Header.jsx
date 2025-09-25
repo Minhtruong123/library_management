@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./Header.module.css";
 import { NavLink, Link, Route, Routes } from "react-router-dom";
+import { AuthContext } from "../../service/AuthContext";
 
 export default function Header() {
   const [isNavActive, setIsNavActive] = useState(false);
+  const { user, logout } = useContext(AuthContext);
 
   const toggleNav = () => {
     setIsNavActive(!isNavActive);
@@ -39,12 +41,26 @@ export default function Header() {
                   <a href="categories.html">Danh mục</a>
                 </li>
                 <li>
-                  <a href="myaccount.html">Tài khoản</a>
+                  <NavLink
+                    to={user ? "/myaccount" : "/auth"}
+                    className={({ isActive }) =>
+                      isActive ? styles.active : undefined
+                    }
+                  >
+                    Tài khoản
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/auth" className={styles.btnLogin}>
-                    Đăng nhập
-                  </NavLink>
+                  {user ? (
+                    <>
+                      <span>Xin chào, {user.username}</span>
+                      <button onClick={logout}>Đăng xuất</button>
+                    </>
+                  ) : (
+                    <NavLink to="/auth" className={styles.btnLogin}>
+                      Đăng nhập
+                    </NavLink>
+                  )}
                 </li>
               </ul>
             </nav>

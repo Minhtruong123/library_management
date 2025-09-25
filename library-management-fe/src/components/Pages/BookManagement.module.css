@@ -1,0 +1,141 @@
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.title h1 {
+  font-size: 1.8rem;
+  margin-bottom: 5px;
+}
+
+.title p {
+  color: #777;
+}
+
+.pageActions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btnPrimary {
+  background-color: var(--primary-color);
+  color: var(--light-color);
+}
+
+.btnPrimary:hover {
+  background-color: #2a5280;
+}
+
+.btnSuccess {
+  background-color: var(--success-color);
+  color: var(--light-color);
+}
+
+.btnSuccess:hover {
+  background-color: #218838;
+}
+
+.btnDanger {
+  background-color: var(--danger-color);
+  color: var(--light-color);
+}
+
+.btnDanger:hover {
+  background-color: #c82333;
+}
+
+.btnSecondary {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.btnSecondary:hover {
+  background-color: #dde2e6;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+  padding: 20px;
+  background-color: var(--light-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.filterItem {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filterItem label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.filterItem select,
+.filterItem input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.filterItem select:focus,
+.filterItem input:focus {
+  border-color: var(--secondary-color);
+}
+
+.filterActions {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .pageActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filterActions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filterActions .btn {
+    width: 100%;
+  }
+}

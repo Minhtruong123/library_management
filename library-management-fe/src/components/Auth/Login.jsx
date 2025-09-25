@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { AuthContext } from "../../service/AuthContext";
 import * as authService from "../../service/authService";
 
 export default function Login({ onSwitchToRegister }) {
   const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -33,9 +35,9 @@ export default function Login({ onSwitchToRegister }) {
         password: formData.password,
       });
 
-      if (res?.data) {
-        login(res.data.userResponse, res.data.token);
-        window.location.href = "/";
+      if (res) {
+        login(res.userResponse, res.token);
+        navigate("/");
       }
     } catch (err) {
       setError("Sai tài khoản hoặc mật khẩu!");
