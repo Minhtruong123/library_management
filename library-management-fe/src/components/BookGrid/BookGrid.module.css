@@ -1,0 +1,131 @@
+.booksGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.bookCard {
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  transition: all 0.3s ease;
+}
+
+.bookCard:hover {
+  transform: translateY(-10px);
+}
+
+.featuredTag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.bookCover {
+  height: 300px;
+  overflow: hidden;
+}
+
+.bookCover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.bookCard:hover .bookCover img {
+  transform: scale(1.05);
+}
+
+.bookInfo {
+  padding: 20px;
+}
+
+.bookInfo h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  line-height: 1.4;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.author {
+  color: var(--gray-color);
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+.bookMeta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.bookMeta span {
+  display: flex;
+  align-items: center;
+}
+
+.bookMeta i {
+  margin-right: 5px;
+  color: var(--secondary-color);
+}
+
+.bookStatus {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.available {
+  background-color: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+}
+
+.unavailable {
+  background-color: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
+}
+
+.btnReserve {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btnReserve:hover {
+  background-color: #2980b9;
+}
+
+.btnReserve:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 576px) {
+  .bookCard {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+}

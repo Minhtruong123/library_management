@@ -29,3 +29,13 @@ export const login = async (values) => {
     console.log(error);
   }
 };
+
+export const register = async (values) => {
+  try {
+    await axios.post("http://localhost:8080/api/auth/register", {
+      ...values,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

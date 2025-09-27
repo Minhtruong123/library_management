@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styles from "./Register.module.css";
+import * as authService from "../../service/authService";
 
 export default function Register({ onSwitchToLogin }) {
   const [formData, setFormData] = useState({
+    username: "",
     fullName: "",
     email: "",
     password: "",
@@ -11,6 +13,8 @@ export default function Register({ onSwitchToLogin }) {
   });
 
   const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -19,7 +23,6 @@ export default function Register({ onSwitchToLogin }) {
       [name]: type === "checkbox" ? checked : value,
     });
 
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -30,6 +33,11 @@ export default function Register({ onSwitchToLogin }) {
 
   const validateForm = () => {
     const newErrors = {};
+    if (!formData.username.trim()) {
+      newErrors.username = "Vui lòng nhập tên đăng nhập";
+    } else if (formData.username.length < 4) {
+      newErrors.username = "Tên đăng nhập phải ít nhất 4 ký tự";
+    }
 
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Vui lòng nhập họ tên đầy đủ";
@@ -58,8 +66,9 @@ export default function Register({ onSwitchToLogin }) {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
 
     const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
@@ -67,8 +76,34 @@ export default function Register({ onSwitchToLogin }) {
       return;
     }
 
-    console.log("Register form submitted:", formData);
-    // Here you would handle registration logic
+    try {
+      setLoading(true);
+
+      await registerService({
+        username: formData.username,
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      setMessage("🎉 Đăng ký thành công! Vui lòng đăng nhập.");
+      setFormData({
+        username: "",
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        agreeTerms: false,
+      });
+
+      if (onSwitchToLogin) {
+        onSwitchToLogin();
+      }
+    } catch (err) {
+      setMessage(`❌ ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <>
@@ -78,7 +113,23 @@ export default function Register({ onSwitchToLogin }) {
           <p>Tạo tài khoản mới tại Thư viện Thông minh</p>
         </div>
 
+        {message && <div className={styles.message}>{message}</div>}
+
         <form className={styles.registerForm} onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="username">Tên đăng nhập</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Nhập tên đăng nhập"
+              value={formData.username}
+              onChange={handleChange}
+            />
+            {errors.username && (
+              <div className={styles.error}>{errors.username}</div>
+            )}
+          </div>
           <div className={styles.formGroup}>
             <label htmlFor="fullName">Họ và tên</label>
             <input
@@ -154,8 +205,12 @@ export default function Register({ onSwitchToLogin }) {
             )}
           </div>
 
-          <button type="submit" className={styles.btnRegister}>
-            Đăng ký
+          <button
+            type="submit"
+            className={styles.btnRegister}
+            disabled={loading}
+          >
+            {loading ? "Đang xử lý..." : "Đăng ký"}
           </button>
         </form>
 

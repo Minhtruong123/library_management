@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sách - Thư viện Thông minh</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* CSS bổ sung cho trang sách */
+      .books-banner {
+        background: linear-gradient(
+            rgba(44, 62, 80, 0.8),
+            rgba(44, 62, 80, 0.8)
+          ),
+          url("https://via.placeholder.com/1920x500") no-repeat center center;
+        background-size: cover;
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+      }
+
+      .books-banner h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .books-banner p {
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .filter-section {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: var(--box-shadow);
+        margin-bottom: 30px;
+      }
+
+      .filter-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .filter-group {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .filter-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .filter-group select,
+      .filter-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+      }
+
+      .filter-buttons {
+        display: flex;
+        gap: 10px;
+        align-self: flex-end;
+      }
+
+      .btn-filter,
+      .btn-reset {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .btn-filter {
+        background-color: var(--secondary-color);
+        color: white;
+      }
+
+      .btn-filter:hover {
+        background-color: #2980b9;
+      }
+
+      .btn-reset {
+        background-color: #f1f1f1;
+        color: var(--text-color);
+      }
+
+      .btn-reset:hover {
+        background-color: #e0e0e0;
+      }
+
+      .books-grid {
+        margin-bottom: 40px;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+        gap: 5px;
+      }
+
+      .pagination a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+      }
+
+      .pagination a:hover,
+      .pagination a.active {
+        background-color: var(--secondary-color);
+        color: white;
+      }
+
+      .book-status {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        margin-top: 5px;
+      }
+
+      .available {
+        background-color: rgba(39, 174, 96, 0.2);
+        color: #27ae60;
+      }
+
+      .unavailable {
+        background-color: rgba(231, 76, 60, 0.2);
+        color: #e74c3c;
+      }
+
+      .featured-tag {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .book-categories {
+        margin-bottom: 40px;
+      }
+
+      .category-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      .category-tag {
+        padding: 8px 15px;
+        background-color: #f1f1f1;
+        border-radius: 20px;
+        transition: var(--transition);
+      }
+
+      .category-tag:hover,
+      .category-tag.active {
+        background-color: var(--secondary-color);
+        color: white;
+      }
+
+      .book-card {
+        position: relative;
+      }
+
+      @media (max-width: 768px) {
+        .filter-buttons {
+          width: 100%;
+          margin-top: 15px;
+        }
+
+        .btn-filter,
+        .btn-reset {
+          flex: 1;
+        }
+
+        .pagination a {
+          width: 35px;
+          height: 35px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo">
+          <h1><i class="fas fa-book-open"></i> Thư viện Thông minh</h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="books.html" class="active">Sách</a></li>
+            <li><a href="categories.html">Danh mục</a></li>
+            <li><a href="myaccount.html">Tài khoản</a></li>
+            <li><a href="login.html" class="btn-login">Đăng nhập</a></li>
+          </ul>
+        </nav>
+        <div class="mobile-toggle">
+          <i class="fas fa-bars"></i>
+        </div>
+      </div>
+    </header>
+
+    <section class="books-banner">
+      <div class="container">
+        <h2>Kho sách đa dạng</h2>
+        <p>
+          Khám phá hơn 10,000 đầu sách thuộc nhiều thể loại từ kinh điển đến
+          hiện đại
+        </p>
+      </div>
+    </section>
+
+    <section class="book-categories">
+      <div class="container">
+        <h2 class="section-title">Danh mục sách</h2>
+        <div class="category-list">
+          <a href="#" class="category-tag active">Tất cả</a>
+          <a href="#" class="category-tag">Văn học</a>
+          <a href="#" class="category-tag">Kinh tế</a>
+          <a href="#" class="category-tag">Khoa học</a>
+          <a href="#" class="category-tag">Lịch sử</a>
+          <a href="#" class="category-tag">Tâm lý học</a>
+          <a href="#" class="category-tag">Thiếu nhi</a>
+          <a href="#" class="category-tag">Kỹ năng sống</a>
+          <a href="#" class="category-tag">Công nghệ</a>
+          <a href="#" class="category-tag">Sức khỏe</a>
+          <a href="#" class="category-tag">Ngoại ngữ</a>
+          <a href="#" class="category-tag">Giáo dục</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="books-list">
+      <div class="container">
+        <div class="filter-section">
+          <div class="filter-container">
+            <div class="filter-group">
+              <label for="search">Tìm kiếm</label>
+              <input
+                type="text"
+                id="search"
+                placeholder="Nhập tên sách, tác giả..."
+              />
+            </div>
+            <div class="filter-group">
+              <label for="category">Thể loại</label>
+              <select id="category">
+                <option value="">Tất cả thể loại</option>
+                <option value="van-hoc">Văn học</option>
+                <option value="kinh-te">Kinh tế</option>
+                <option value="khoa-hoc">Khoa học</option>
+                <option value="lich-su">Lịch sử</option>
+                <option value="tam-ly-hoc">Tâm lý học</option>
+                <option value="thieu-nhi">Thiếu nhi</option>
+                <option value="ky-nang-song">Kỹ năng sống</option>
+                <option value="cong-nghe">Công nghệ</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="sort">Sắp xếp theo</label>
+              <select id="sort">
+                <option value="newest">Mới nhất</option>
+                <option value="rating-desc">Đánh giá cao nhất</option>
+                <option value="rating-asc">Đánh giá thấp nhất</option>
+                <option value="az">A-Z</option>
+                <option value="za">Z-A</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="availability">Trạng thái</label>
+              <select id="availability">
+                <option value="">Tất cả</option>
+                <option value="available">Có sẵn</option>
+                <option value="unavailable">Đã mượn hết</option>
+              </select>
+            </div>
+            <div class="filter-buttons">
+              <button class="btn-filter">Lọc kết quả</button>
+              <button class="btn-reset">Đặt lại</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="books-grid">
+          <!-- Sách 1 -->
+          <div class="book-card">
+            <div class="featured-tag">Nổi bật</div>
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="Sapiens: Lược sử loài người"
+              />
+            </div>
+            <div class="book-info">
+              <h3>Sapiens: Lược sử loài người</h3>
+              <p class="author">Yuval Noah Harari</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.7</span>
+                <span><i class="fas fa-layer-group"></i> Lịch sử</span>
+              </div>
+              <div class="book-status available">Còn 5 cuốn</div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+
+          <!-- Sách 2 -->
+          <div class="book-card">
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="Đắc nhân tâm"
+              />
+            </div>
+            <div class="book-info">
+              <h3>Đắc nhân tâm</h3>
+              <p class="author">Dale Carnegie</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.8</span>
+                <span><i class="fas fa-layer-group"></i> Kỹ năng sống</span>
+              </div>
+              <div class="book-status available">Còn 3 cuốn</div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+
+          <!-- Sách 3 -->
+          <div class="book-card">
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="Atomic Habits"
+              />
+            </div>
+            <div class="book-info">
+              <h3>Atomic Habits</h3>
+              <p class="author">James Clear</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.9</span>
+                <span
+                  ><i class="fas fa-layer-group"></i> Phát triển bản thân</span
+                >
+              </div>
+              <div class="book-status available">Còn 2 cuốn</div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+
+          <!-- Sách 4 -->
+          <div class="book-card">
+            <div class="featured-tag">Nổi bật</div>
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="Nghệ thuật tinh tế của việc đếch quan tâm"
+              />
+            </div>
+            <div class="book-info">
+              <h3>Nghệ thuật tinh tế của việc đếch quan tâm</h3>
+              <p class="author">Mark Manson</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.5</span>
+                <span><i class="fas fa-layer-group"></i> Tâm lý học</span>
+              </div>
+              <div class="book-status available">Còn 7 cuốn</div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+
+          <!-- Sách 5 -->
+          <div class="book-card">
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="Nhà giả kim"
+              />
+            </div>
+            <div class="book-info">
+              <h3>Nhà giả kim</h3>
+              <p class="author">Paulo Coelho</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.6</span>
+                <span><i class="fas fa-layer-group"></i> Văn học</span>
+              </div>
+              <div class="book-status unavailable">Đã mượn hết</div>
+              <button class="btn-reserve" disabled>Đặt sách</button>
+            </div>
+          </div>
+
+          <!-- Sách 6 -->
+          <div class="book-card">
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="Tư duy nhanh và chậm"
+              />
+            </div>
+            <div class="book-info">
+              <h3>Tư duy nhanh và chậm</h3>
+              <p class="author">Daniel Kahneman</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.5</span>
+                <span><i class="fas fa-layer-group"></i> Tâm lý học</span>
+              </div>
+              <div class="book-status available">Còn 4 cuốn</div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+
+          <!-- Sách 7 -->
+          <div class="book-card">
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="Dám nghĩ lớn"
+              />
+            </div>
+            <div class="book-info">
+              <h3>Dám nghĩ lớn</h3>
+              <p class="author">David J. Schwartz</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.4</span>
+                <span
+                  ><i class="fas fa-layer-group"></i> Phát triển bản thân</span
+                >
+              </div>
+              <div class="book-status available">Còn 1 cuốn</div>
+              <button class="btn-reserve">Đặt sách</button>
+            </div>
+          </div>
+
+          <!-- Sách 8 -->
+          <div class="book-card">
+            <div class="book-cover">
+              <img
+                src="https://via.placeholder.com/150x220"
+                alt="21 bài học cho thế kỷ 21"
+              />
+            </div>
+            <div class="book-info">
+              <h3>21 bài học cho thế kỷ 21</h3>
+              <p class="author">Yuval Noah Harari</p>
+              <div class="book-meta">
+                <span><i class="fas fa-star"></i> 4.6</span>
+                <span><i class="fas fa-layer-group"></i> Khoa học xã hội</span>
+              </div>
+              <div class="book-status unavailable">Đã mượn hết</div>
+              <button class="btn-reserve" disabled>Đặt sách</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pagination">
+          <a href="#" class="active">1</a>
+          <a href="#">2</a>
+          <a href="#">3</a>
+          <a href="#">4</a>
+          <a href="#">5</a>
+          <a href="#"><i class="fas fa-chevron-right"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ai-assistant">
+      <div class="container">
+        <div class="ai-assistant-content">
+          <div class="ai-info">
+            <h2>Trợ lý AI thông minh</h2>
+            <p>
+              Không tìm thấy sách bạn cần? Trợ lý AI của chúng tôi có thể giúp
+              bạn tìm kiếm sách theo chủ đề, tác giả hoặc gợi ý những cuốn sách
+              tương tự với sở thích của bạn.
+            </p>
+            <ul>
+              <li>
+                <i class="fas fa-check"></i> Gợi ý sách dựa trên sở thích của
+                bạn
+              </li>
+              <li>
+                <i class="fas fa-check"></i> Tìm kiếm sách theo chủ đề cụ thể
+              </li>
+              <li>
+                <i class="fas fa-check"></i> Trả lời câu hỏi về nội dung sách
+              </li>
+              <li>
+                <i class="fas fa-check"></i> Hỗ trợ đặt sách và kiểm tra tình
+                trạng
+              </li>
+            </ul>
+            <button class="btn-try-ai" onclick="openChatbot()">
+              Trò chuyện với AI
+            </button>
+          </div>
+          <div class="ai-image">
+            <img src="https://via.placeholder.com/500x400" alt="AI Assistant" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="chatbot-container" id="chatbot">
+      <div class="chatbot-header">
+        <h3><i class="fas fa-robot"></i> Trợ lý thư viện</h3>
+        <button onclick="closeChatbot()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="message bot">
+          <div class="message-content">
+            Xin chào! Tôi là trợ lý AI của thư viện. Tôi có thể giúp gì cho bạn
+            hôm nay? Bạn có thể hỏi tôi về:
+            <ul>
+              <li>Tìm kiếm sách theo tên, tác giả, thể loại</li>
+              <li>Thông tin về quy trình mượn/trả sách</li>
+              <li>Gợi ý sách theo sở thích</li>
+              <li>Trạng thái đặt sách của bạn</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="chatbot-input">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Nhập câu hỏi của bạn..."
+        />
+        <button onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>Thư viện Thông minh</h3>
+            <p>
+              Nơi kết nối tri thức và công nghệ, mang đến trải nghiệm đọc sách
+              tốt nhất cho bạn.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h3>Liên kết</h3>
+            <ul>
+              <li><a href="index.html">Trang chủ</a></li>
+              <li><a href="books.html">Sách</a></li>
+              <li><a href="categories.html">Danh mục</a></li>
+              <li><a href="myaccount.html">Tài khoản</a></li>
+              <li><a href="#">Giới thiệu</a></li>
+              <li><a href="#">Liên hệ</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Liên hệ</h3>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> 123 Đường Sách, Q.1, TP.HCM
+            </p>
+            <p><i class="fas fa-phone"></i> (028) 1234 5678</p>
+            <p><i class="fas fa-envelope"></i> info@thuvienthongminh.vn</p>
+          </div>
+          <div class="footer-section">
+            <h3>Giờ làm việc</h3>
+            <p>Thứ Hai - Thứ Sáu: 8:00 - 21:00</p>
+            <p>Thứ Bảy: 9:00 - 19:00</p>
+            <p>Chủ Nhật: 9:00 - 17:00</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Thư viện Thông minh. Tất cả quyền được bảo lưu.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Book filter functionality
+      document
+        .querySelector(".btn-filter")
+        .addEventListener("click", function () {
+          // Lấy các giá trị từ bộ lọc
+          const search = document.getElementById("search").value.toLowerCase();
+          const category = document.getElementById("category").value;
+          const sort = document.getElementById("sort").value;
+          const availability = document.getElementById("availability").value;
+
+          // Trong thực tế, đây sẽ là một API call hoặc xử lý backend
+          // Hiện tại chỉ hiển thị thông báo để demo
+          alert(
+            `Đang lọc với các tiêu chí:\nTìm kiếm: ${search}\nThể loại: ${category}\nSắp xếp: ${sort}\nTrạng thái: ${availability}`
+          );
+        });
+
+      document
+        .querySelector(".btn-reset")
+        .addEventListener("click", function () {
+          document.getElementById("search").value = "";
+          document.getElementById("category").selectedIndex = 0;
+          document.getElementById("sort").selectedIndex = 0;
+          document.getElementById("availability").selectedIndex = 0;
+        });
+
+      // Category tags functionality
+      const categoryTags = document.querySelectorAll(".category-tag");
+      categoryTags.forEach((tag) => {
+        tag.addEventListener("click", function (e) {
+          e.preventDefault();
+          // Remove active class from all tags
+          categoryTags.forEach((t) => t.classList.remove("active"));
+          // Add active class to clicked tag
+          this.classList.add("active");
+
+          // In real app, this would filter the books
+          const category = this.textContent;
+          if (category !== "Tất cả") {
+            alert(`Đang hiển thị sách thuộc danh mục: ${category}`);
+          }
+        });
+      });
+
+      // Pagination functionality
+      const paginationLinks = document.querySelectorAll(".pagination a");
+      paginationLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          // Remove active class from all links
+          paginationLinks.forEach((l) => l.classList.remove("active"));
+          // Add active class to clicked link
+          this.classList.add("active");
+
+          // In real app, this would load the relevant page of books
+          if (!this.querySelector("i")) {
+            // Skip the next button
+            const page = this.textContent;
+            alert(`Đang chuyển đến trang ${page}`);
+          }
+        });
+      });
+
+      // Disable buttons for unavailable books
+      document
+        .querySelectorAll(".book-status.unavailable")
+        .forEach((status) => {
+          const button = status.nextElementSibling;
+          button.disabled = true;
+          button.style.backgroundColor = "#95a5a6";
+          button.style.cursor = "not-allowed";
+        });
+    </script>
+  </body>
+</html>

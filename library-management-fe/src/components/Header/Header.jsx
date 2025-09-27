@@ -1,15 +1,35 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import styles from "./Header.module.css";
 import { NavLink, Link, Route, Routes } from "react-router-dom";
 import { AuthContext } from "../../service/AuthContext";
 
 export default function Header() {
   const [isNavActive, setIsNavActive] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const { user, logout } = useContext(AuthContext);
+  const dropdownRef = useRef(null);
 
   const toggleNav = () => {
     setIsNavActive(!isNavActive);
   };
+
+  const toggleDropdown = () => {
+    setShowDropdown(!showDropdown);
+  };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   return (
     <>
       <header className={styles.header}>
@@ -35,33 +55,68 @@ export default function Header() {
                   </NavLink>
                 </li>
                 <li>
-                  <a href="books.html">Sách</a>
-                </li>
-                <li>
-                  <a href="categories.html">Danh mục</a>
-                </li>
-                <li>
                   <NavLink
-                    to={user ? "/myaccount" : "/auth"}
+                    to="/books"
                     className={({ isActive }) =>
                       isActive ? styles.active : undefined
                     }
                   >
-                    Tài khoản
+                    Sách
                   </NavLink>
                 </li>
                 <li>
-                  {user ? (
-                    <>
-                      <span>Xin chào, {user.username}</span>
-                      <button onClick={logout}>Đăng xuất</button>
-                    </>
-                  ) : (
-                    <NavLink to="/auth" className={styles.btnLogin}>
+                  <a href="categories.html">Danh mục</a>
+                </li>
+                {user ? (
+                  <>
+                    <li>
+                      <NavLink
+                        to="/myaccount"
+                        className={({ isActive }) =>
+                          isActive ? styles.active : undefined
+                        }
+                      >
+                        Tài khoản
+                      </NavLink>
+                    </li>
+                    <li>
+                      <div className={styles.userDropdown} ref={dropdownRef}>
+                        <div
+                          className={styles.userGreeting}
+                          onClick={toggleDropdown}
+                        >
+                          <span>Xin chào, {user.username}</span>
+                          <i
+                            className={`fas fa-chevron-down ${styles.dropdownIcon}`}
+                          ></i>
+                        </div>
+                        {showDropdown && (
+                          <div className={styles.dropdownMenu}>
+                            <button
+                              onClick={logout}
+                              className={styles.dropdownItem}
+                            >
+                              <i className="fas fa-sign-out-alt"></i> Đăng xuất
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </li>
+                  </>
+                ) : (
+                  <li>
+                    <NavLink
+                      to="/auth"
+                      className={({ isActive }) =>
+                        isActive
+                          ? `${styles.btnLogin} ${styles.active}`
+                          : styles.btnLogin
+                      }
+                    >
                       Đăng nhập
                     </NavLink>
-                  )}
-                </li>
+                  </li>
+                )}
               </ul>
             </nav>
             <div className={styles.mobileToggle} onClick={toggleNav}>

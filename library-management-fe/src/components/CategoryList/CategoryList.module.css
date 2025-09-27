@@ -1,0 +1,23 @@
+.bookCategories {
+  margin-bottom: 40px;
+}
+
+.categoryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.categoryTag {
+  padding: 8px 15px;
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.categoryTag:hover,
+.categoryTag.active {
+  background-color: var(--secondary-color);
+  color: white;
+}
