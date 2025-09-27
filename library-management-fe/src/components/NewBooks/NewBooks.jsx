@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./NewBooks.module.css";
 import BookCard from "../BookCard/BookCard";
+import * as bookService from "../../service/bookService";
 
 export default function NewBooks() {
-  const books = [
+  const [books, setBooks] = useState([]);
+
+  const fetchApi = async () => {
+    try {
+      const data = await bookService.getNewBooks();
+      setBooks(data);
+    } catch (error) {
+      console.error("Lỗi load sách mới:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
+  const book = [
     {
       title: "Nghệ thuật tinh tế của việc đếch quan tâm",
       author: "Mark Manson",

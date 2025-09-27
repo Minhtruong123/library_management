@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -28,13 +29,14 @@ public class Book {
     int totalCopies;
     int availableCopies;
     String shelfLocation;
+    String image;
     @ManyToMany
     @JoinTable(
             name = "book_authors",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    Set<Author> authors;
+    List<Author> authors;
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(referencedColumnName = "id")
@@ -45,5 +47,5 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "publisher_id")
     )
-    Set<Publisher> publishers;
+    List<Publisher> publishers;
 }
