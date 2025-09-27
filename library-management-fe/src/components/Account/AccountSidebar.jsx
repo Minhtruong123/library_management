@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./AccountSidebar.module.css";
 
-export default function AccountSidebar() {
+export default function AccountSidebar({ activeSection, setActiveSection }) {
+  const handleMenuClick = (section) => {
+    setActiveSection(section);
+  };
+
   return (
     <>
       <div className={styles.accountSidebar}>
@@ -18,17 +22,42 @@ export default function AccountSidebar() {
           <h3>Tài khoản</h3>
           <ul>
             <li>
-              <a href="#" className={styles.active}>
+              <a
+                href="#"
+                className={activeSection === "dashboard" ? styles.active : ""}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMenuClick("dashboard");
+                }}
+              >
                 <i className="fas fa-tachometer-alt"></i> Bảng điều khiển
               </a>
             </li>
             <li>
-              <a href="#">
+              <a
+                href="#"
+                className={
+                  activeSection === "personal-info" ? styles.active : ""
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMenuClick("personal-info");
+                }}
+              >
                 <i className="fas fa-user"></i> Thông tin cá nhân
               </a>
             </li>
             <li>
-              <a href="#">
+              <a
+                href="#"
+                className={
+                  activeSection === "change-password" ? styles.active : ""
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMenuClick("change-password");
+                }}
+              >
                 <i className="fas fa-key"></i> Đổi mật khẩu
               </a>
             </li>

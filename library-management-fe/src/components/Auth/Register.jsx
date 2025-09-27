@@ -7,6 +7,7 @@ export default function Register({ onSwitchToLogin }) {
     username: "",
     fullName: "",
     email: "",
+    phoneNumber: "",
     password: "",
     confirmPassword: "",
     agreeTerms: false,
@@ -49,6 +50,12 @@ export default function Register({ onSwitchToLogin }) {
       newErrors.email = "Email không hợp lệ";
     }
 
+    if (!formData.phoneNumber.trim()) {
+      newErrors.phoneNumber = "Vui lòng nhập số điện thoại";
+    } else if (!/^(0[0-9]{9}|84[0-9]{9})$/.test(formData.phoneNumber)) {
+      newErrors.phoneNumber = "Số điện thoại không hợp lệ";
+    }
+
     if (!formData.password) {
       newErrors.password = "Vui lòng nhập mật khẩu";
     } else if (formData.password.length < 6) {
@@ -79,10 +86,11 @@ export default function Register({ onSwitchToLogin }) {
     try {
       setLoading(true);
 
-      await registerService({
+      await authService.register({
         username: formData.username,
         fullName: formData.fullName,
         email: formData.email,
+        phoneNumber: formData.phoneNumber,
         password: formData.password,
       });
 
@@ -112,8 +120,6 @@ export default function Register({ onSwitchToLogin }) {
           <h2>Đăng ký tài khoản</h2>
           <p>Tạo tài khoản mới tại Thư viện Thông minh</p>
         </div>
-
-        {message && <div className={styles.message}>{message}</div>}
 
         <form className={styles.registerForm} onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
@@ -156,6 +162,21 @@ export default function Register({ onSwitchToLogin }) {
               onChange={handleChange}
             />
             {errors.email && <div className={styles.error}>{errors.email}</div>}
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="phoneNumber">Số điện thoại</label>
+            <input
+              type="text"
+              id="phoneNumber"
+              name="phoneNumber"
+              placeholder="Nhập số điện thoại"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+            {errors.phoneNumber && (
+              <div className={styles.error}>{errors.phoneNumber}</div>
+            )}
           </div>
 
           <div className={styles.formGroup}>

@@ -32,6 +32,7 @@ export const login = async (values) => {
 
 export const register = async (values) => {
   try {
+    console.log(values);
     await axios.post("http://localhost:8080/api/auth/register", {
       ...values,
     });

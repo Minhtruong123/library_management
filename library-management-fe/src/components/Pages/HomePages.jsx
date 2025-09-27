@@ -25,9 +25,9 @@ export default function HomePages() {
       <Hero />
       <Features />
       <NewBooks />
+      <HowItWorks />
       <AIAssistant openChatbot={openChatbot} />
       <ChatBot isOpen={chatbotOpen} closeChatbot={closeChatbot} />
-      <HowItWorks />
       <Footer />
     </>
   );

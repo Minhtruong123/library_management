@@ -1,12 +1,13 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import styles from "./Header.module.css";
-import { NavLink, Link, Route, Routes } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../service/AuthContext";
 
 export default function Header() {
   const [isNavActive, setIsNavActive] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
   const toggleNav = () => {
@@ -29,6 +30,11 @@ export default function Header() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownRef]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
+  };
 
   return (
     <>
@@ -93,7 +99,7 @@ export default function Header() {
                         {showDropdown && (
                           <div className={styles.dropdownMenu}>
                             <button
-                              onClick={logout}
+                              onClick={handleLogout}
                               className={styles.dropdownItem}
                             >
                               <i className="fas fa-sign-out-alt"></i> Đăng xuất
