@@ -1,6 +1,7 @@
 package com.example.library_management.model;
 
 import com.example.library_management.dto.request.RegisterRequest;
+import com.example.library_management.enums.Gender;
 import com.example.library_management.enums.MembershipType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,8 +38,21 @@ public class User implements UserDetails {
     String password;
     LocalDateTime createdAt=LocalDateTime.now();;
     boolean active = true;
+    LocalDate dateOfBirth;
+    @Enumerated(EnumType.STRING)
+    Gender gender;
+    String job;
+    String address;
+    String image;
     @Enumerated(EnumType.STRING)
     MembershipType membershipType;
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_categories",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    Set<Category> favoriteCategories = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",

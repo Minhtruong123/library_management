@@ -1,18 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./PersonalInfo.module.css";
+import * as userService from "../../service/userService";
 
 export default function PersonalInfo() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: "Nguyễn Văn A",
-    email: "nguyenvana@email.com",
-    phone: "0123456789",
-    dateOfBirth: "1990-01-15",
+    fullName: "",
+    email: "",
+    phone: "",
+    dateOfBirth: "",
     gender: "male",
-    address: "123 Đường ABC, Quận 1, TP.HCM",
-    occupation: "Kỹ sư phần mềm",
-    interests: "Công nghệ, Khoa học, Tiểu thuyết",
+    occupation: "",
+    address: "",
+    interests: "",
   });
+
+  const fetchApi = async () => {
+    try {
+      const data = await userService.getCurrentUser();
+      setFormData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

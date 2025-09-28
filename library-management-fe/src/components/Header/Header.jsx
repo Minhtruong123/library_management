@@ -71,7 +71,14 @@ export default function Header() {
                   </NavLink>
                 </li>
                 <li>
-                  <a href="categories.html">Danh mục</a>
+                  <NavLink
+                    to="/categories"
+                    className={({ isActive }) =>
+                      isActive ? styles.active : undefined
+                    }
+                  >
+                    Danh mục
+                  </NavLink>
                 </li>
                 {user ? (
                   <>

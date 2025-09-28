@@ -1,9 +1,8 @@
 import api from "./authService";
 
-export const getNewBooks = async () => {
+export const getCurrentUser = async () => {
   try {
-    const result = await api.get("books");
-    console.log(result.data);
+    const result = await api.get("/users");
     return result.data;
   } catch (error) {
     console.log(error);
