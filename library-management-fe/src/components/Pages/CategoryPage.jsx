@@ -3,36 +3,28 @@ import { useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import styles from "./CategoryPage.module.css";
+import * as categoryService from "../../service/categoryService";
 
 export default function CategoryPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setTimeout(() => {
-          const mockCategories = [
-            { id: 1, name: "Văn học", count: 253 },
-            { id: 2, name: "Khoa học", count: 187 },
-            { id: 3, name: "Lịch sử", count: 142 },
-            { id: 4, name: "Kinh tế", count: 201 },
-            { id: 5, name: "Tâm lý học", count: 167 },
-            { id: 6, name: "Kỹ năng sống", count: 156 },
-            { id: 7, name: "Công nghệ", count: 198 },
-            { id: 8, name: "Giáo dục", count: 134 },
-          ];
-          setCategories(mockCategories);
-          setLoading(false);
-        }, 800);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
+  const fetchApi = async () => {
+    try {
+      const data = await categoryService.getAllCategories();
+      setTimeout(() => {
+        setCategories(data);
         setLoading(false);
-      }
-    };
+      }, 800);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setLoading(false);
+    }
+  };
 
-    fetchCategories();
+  useEffect(() => {
+    fetchApi();
   }, []);
 
   const handleCategoryClick = (categoryId) => {
@@ -63,7 +55,7 @@ export default function CategoryPage() {
                 >
                   <div className={styles.categoryInfo}>
                     <h3>{category.name}</h3>
-                    <p>{category.count} cuốn sách</p>
+                    <p>{category.description}</p>
                   </div>
                   <div className={styles.categoryIcon}>
                     <i className="fas fa-chevron-right"></i>

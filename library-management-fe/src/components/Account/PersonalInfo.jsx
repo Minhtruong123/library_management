@@ -7,12 +7,13 @@ export default function PersonalInfo() {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     dateOfBirth: "",
     gender: "male",
-    occupation: "",
+    job: "",
     address: "",
-    interests: "",
+    favoriteCategories: "",
+    image: "",
   });
 
   const fetchApi = async () => {
@@ -36,11 +37,20 @@ export default function PersonalInfo() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Cập nhật thông tin:", formData);
-    setIsEditing(false);
-    alert("Cập nhật thông tin thành công!");
+    try {
+      console.log(formData);
+
+      const updatedUser = await userService.updateUser(formData.id, formData);
+
+      setFormData(updatedUser);
+      setIsEditing(false);
+      alert("Cập nhật thông tin thành công!");
+    } catch (error) {
+      console.error("Lỗi khi cập nhật user:", error);
+      alert("Cập nhật thất bại, vui lòng thử lại!");
+    }
   };
 
   const handleCancel = () => {
@@ -71,14 +81,27 @@ export default function PersonalInfo() {
             <div className={styles.avatarSection}>
               <div className={styles.avatarContainer}>
                 <img
-                  src="https://via.placeholder.com/120x120"
+                  src={
+                    formData?.image && formData?.image.trim() !== ""
+                      ? formData?.image
+                      : "https://placehold.co/120x120"
+                  }
                   alt="Avatar"
                   className={styles.avatar}
                 />
                 {isEditing && (
-                  <button type="button" className={styles.changeAvatarBtn}>
+                  <div className={styles.avatarInputGroup}>
                     <i className="fas fa-camera"></i>
-                  </button>
+                    <input
+                      type="text"
+                      id="image"
+                      name="image"
+                      value={formData?.image}
+                      onChange={handleInputChange}
+                      placeholder="Nhập link ảnh avatar..."
+                      className={styles.avatarInput}
+                    />
+                  </div>
                 )}
               </div>
             </div>
@@ -90,7 +113,7 @@ export default function PersonalInfo() {
                   type="text"
                   id="fullName"
                   name="fullName"
-                  value={formData.fullName}
+                  value={formData?.fullName}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   required
@@ -103,7 +126,7 @@ export default function PersonalInfo() {
                   type="email"
                   id="email"
                   name="email"
-                  value={formData.email}
+                  value={formData?.email}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   required
@@ -111,12 +134,12 @@ export default function PersonalInfo() {
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="phone">Số điện thoại</label>
+                <label htmlFor="phoneNumber">Số điện thoại</label>
                 <input
                   type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData?.phoneNumber}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   required
@@ -129,7 +152,7 @@ export default function PersonalInfo() {
                   type="date"
                   id="dateOfBirth"
                   name="dateOfBirth"
-                  value={formData.dateOfBirth}
+                  value={formData?.dateOfBirth}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                 />
@@ -140,7 +163,7 @@ export default function PersonalInfo() {
                 <select
                   id="gender"
                   name="gender"
-                  value={formData.gender}
+                  value={formData?.gender}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                 >
@@ -151,12 +174,12 @@ export default function PersonalInfo() {
               </div>
 
               <div className={styles.formGroup}>
-                <label htmlFor="occupation">Nghề nghiệp</label>
+                <label htmlFor="job">Nghề nghiệp</label>
                 <input
                   type="text"
-                  id="occupation"
-                  name="occupation"
-                  value={formData.occupation}
+                  id="job"
+                  name="job"
+                  value={formData?.job}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                 />
@@ -168,18 +191,18 @@ export default function PersonalInfo() {
                   type="text"
                   id="address"
                   name="address"
-                  value={formData.address}
+                  value={formData?.address}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                 />
               </div>
 
               <div className={`${styles.formGroup} ${styles.fullWidth}`}>
-                <label htmlFor="interests">Sở thích đọc sách</label>
+                <label htmlFor="favoriteCategories">Sở thích đọc sách</label>
                 <textarea
-                  id="interests"
-                  name="interests"
-                  value={formData.interests}
+                  id="favoriteCategories"
+                  name="favoriteCategories"
+                  value={formData?.favoriteCategories}
                   onChange={handleInputChange}
                   disabled={!isEditing}
                   rows="3"

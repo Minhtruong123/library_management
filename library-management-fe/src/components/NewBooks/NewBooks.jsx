@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./NewBooks.module.css";
 import BookCard from "../BookCard/BookCard";
+import { NavLink } from "react-router-dom";
 import * as bookService from "../../service/bookService";
 
 export default function NewBooks() {
@@ -30,9 +31,9 @@ export default function NewBooks() {
             ))}
           </div>
           <div className={styles.center}>
-            <a href="books.html" className={styles.btnViewAll}>
+            <NavLink to="/books" className={styles.btnViewAll}>
               Xem tất cả
-            </a>
+            </NavLink>
           </div>
         </div>
       </section>

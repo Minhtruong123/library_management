@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface IUserService {
     UserResponse getUserByUserName(String username);
     Optional<UserResponse> getUserById(Integer id);
-    UserResponse updateUser(Integer id, UserUpdateRequest user);
+    UserResponse updateUser(String username, UserUpdateRequest user);
 }

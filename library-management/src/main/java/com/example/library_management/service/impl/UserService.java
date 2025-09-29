@@ -38,21 +38,28 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponse updateUser(Integer id, UserUpdateRequest newUser) {
-        return userRepository.findById(id).map(user -> {
-            user.setFullName(newUser.getFullName());
-            user.setEmail(newUser.getEmail());
-            user.setPhoneNumber(newUser.getPhoneNumber());
-            user.setDateOfBirth(newUser.getDateOfBirth());
-            user.setJob(newUser.getJob());
-            user.setAddress(newUser.getAddress());
-            user.setImage(newUser.getImage());
+    public UserResponse updateUser(String username, UserUpdateRequest newUser) {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User không tồn tại!");
+        }
+        user.setFullName(newUser.getFullName());
+        user.setEmail(newUser.getEmail());
+        user.setPhoneNumber(newUser.getPhoneNumber());
+        user.setDateOfBirth(newUser.getDateOfBirth());
+        user.setJob(newUser.getJob());
+        user.setAddress(newUser.getAddress());
+        user.setImage(newUser.getImage());
+
+        if (newUser.getGender() != null) {
             user.setGender(Gender.valueOf(newUser.getGender().toUpperCase()));
-            if (newUser.getFavoriteCategoryIds() != null) {
-                Iterable<Category> categories = categoryRepository.findAllById(newUser.getFavoriteCategoryIds());
-                user.setFavoriteCategories(new HashSet<>( (Collection<Category>) categories ));
-            }
-            return new UserResponse(userRepository.save(user));
-        }).orElseThrow(() -> new RuntimeException("User không tồn tại!"));
+        }
+
+        if (newUser.getFavoriteCategoryIds() != null) {
+            Iterable<Category> categories = categoryRepository.findAllById(newUser.getFavoriteCategoryIds());
+            user.setFavoriteCategories(new HashSet<>((Collection<Category>) categories));
+        }
+
+        return new UserResponse(userRepository.save(user));
     }
 }

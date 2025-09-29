@@ -80,6 +80,32 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.avatarInputGroup {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.avatarInputGroup i {
+  color: #555;
+}
+
+.avatarInput {
+  width: 220px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.avatarInput:focus {
+  border-color: #007bff;
+}
+
 .changeAvatarBtn {
   position: absolute;
   bottom: 5px;

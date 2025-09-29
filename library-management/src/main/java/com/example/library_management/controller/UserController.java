@@ -19,9 +19,10 @@ public class UserController extends AbstractController{
         String username = authentication.getName();
         return ResponseEntity.ok(userService.getUserByUserName(username));
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Integer id,
+    @PutMapping("/me")
+    public ResponseEntity<?> updateUser(Authentication authentication,
                                         @RequestBody UserUpdateRequest user){
-        return ResponseEntity.ok(userService.updateUser(id, user));
+        String username = authentication.getName();
+        return ResponseEntity.ok(userService.updateUser(username, user));
     }
 }

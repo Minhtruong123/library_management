@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/books/**").permitAll()
                         .requestMatchers("/api/users/**").authenticated()
-                        .requestMatchers("/api/category/**").authenticated()
+                        .requestMatchers("/api/category/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
