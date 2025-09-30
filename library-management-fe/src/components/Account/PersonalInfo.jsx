@@ -80,7 +80,7 @@ export default function PersonalInfo() {
           <form onSubmit={handleSubmit} className={styles.infoForm}>
             <div className={styles.avatarSection}>
               <div className={styles.avatarContainer}>
-                <img
+                {/* <img
                   src={
                     formData?.image && formData?.image.trim() !== ""
                       ? formData?.image
@@ -88,7 +88,7 @@ export default function PersonalInfo() {
                   }
                   alt="Avatar"
                   className={styles.avatar}
-                />
+                /> */}
                 {isEditing && (
                   <div className={styles.avatarInputGroup}>
                     <i className="fas fa-camera"></i>

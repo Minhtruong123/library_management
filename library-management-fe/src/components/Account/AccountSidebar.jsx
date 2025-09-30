@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AccountSidebar.module.css";
+import * as userService from "../../service/userService";
 
 export default function AccountSidebar({ activeSection, setActiveSection }) {
+  const [currentUser, setCurrentUser] = useState({
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    dateOfBirth: "",
+    gender: "male",
+    job: "",
+    address: "",
+    favoriteCategories: "",
+    image: "",
+  });
+
+  const fetchApi = async () => {
+    try {
+      const data = await userService.getCurrentUser();
+      setCurrentUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchApi();
+  }, []);
+
   const handleMenuClick = (section) => {
     setActiveSection(section);
   };
@@ -11,7 +37,15 @@ export default function AccountSidebar({ activeSection, setActiveSection }) {
       <div className={styles.accountSidebar}>
         <div className={styles.userInfo}>
           <div className={styles.userAvatar}>
-            <img src="https://via.placeholder.com/100x100" alt="User Avatar" />
+            <img
+              src={
+                currentUser?.image && currentUser?.image.trim() !== ""
+                  ? currentUser?.image
+                  : "https://placehold.co/120x120"
+              }
+              alt="Avatar"
+              className={styles.avatar}
+            />
           </div>
           <h3 className={styles.userName}>Nguyễn Văn A</h3>
           <p className={styles.userId}>ID: TV-2025-1234</p>

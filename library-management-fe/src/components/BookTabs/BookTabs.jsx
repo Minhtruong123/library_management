@@ -29,18 +29,18 @@ export default function BookTabs({ book }) {
             }`}
             onClick={() => setActiveTab("reviews")}
           >
-            Đánh giá ({book.reviews.length})
+            Đánh giá ({book?.reviews?.length})
           </div>
         </div>
 
         <div className={styles.tabContent}>
-          {activeTab === "description" && (
+          {/* {activeTab === "description" && (
             <div className={styles.description}>
-              {book.description.map((paragraph, index) => (
+              {book?.description.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
-          )}
+          )} */}
 
           {activeTab === "details" && (
             <table className={styles.detailsTable}>
@@ -51,11 +51,11 @@ export default function BookTabs({ book }) {
                 </tr>
                 <tr>
                   <th>Tác giả</th>
-                  <td>{book.author}</td>
+                  <td>{book?.author}</td>
                 </tr>
                 <tr>
                   <th>Nhà xuất bản</th>
-                  <td>{book.details.publisher}</td>
+                  <td>{book?.details.publisher}</td>
                 </tr>
                 <tr>
                   <th>Năm xuất bản</th>
@@ -67,11 +67,11 @@ export default function BookTabs({ book }) {
                 </tr>
                 <tr>
                   <th>Số trang</th>
-                  <td>{book.details.pages}</td>
+                  <td>{book?.details.pages}</td>
                 </tr>
                 <tr>
                   <th>Kích thước</th>
-                  <td>{book.details.dimensions}</td>
+                  <td>{book?.details.dimensions}</td>
                 </tr>
                 <tr>
                   <th>ISBN</th>
@@ -79,19 +79,19 @@ export default function BookTabs({ book }) {
                 </tr>
                 <tr>
                   <th>Thể loại</th>
-                  <td>{book.details.categories}</td>
+                  <td>{book?.details.categories}</td>
                 </tr>
                 <tr>
                   <th>Vị trí trong thư viện</th>
-                  <td>{book.details.location}</td>
+                  <td>{book?.details.location}</td>
                 </tr>
               </tbody>
             </table>
           )}
 
-          {activeTab === "reviews" && (
+          {/* {activeTab === "reviews" && (
             <div className={styles.reviewsContainer}>
-              {book.reviews.map((review, index) => (
+              {book?.reviews?.map((review, index) => (
                 <div className={styles.review} key={index}>
                   <div className={styles.reviewHeader}>
                     <div className={styles.reviewerInfo}>
@@ -124,7 +124,7 @@ export default function BookTabs({ book }) {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>

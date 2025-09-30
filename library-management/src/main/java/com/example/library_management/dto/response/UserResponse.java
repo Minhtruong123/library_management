@@ -49,6 +49,7 @@ public class UserResponse {
         this.gender = user.getGender();
         this.job = user.getJob();
         this.address = user.getAddress();
+        this.image = user.getImage();
         this.favoriteCategories = user.getFavoriteCategories()
                 .stream()
                 .map(Category::getName)

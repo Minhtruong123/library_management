@@ -4,6 +4,7 @@
   overflow: hidden;
   box-shadow: var(--box-shadow);
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .bookCard:hover {

@@ -9,3 +9,12 @@ export const getNewBooks = async () => {
     console.log(error);
   }
 };
+
+export const getBookById = async (id) => {
+  try {
+    const result = await api.get(`/books/${id}`);
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./BookCard.module.css";
 
 export default function BookCard({ book }) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/book/${book.id}`);
+  };
   return (
     <>
-      <div className={styles.bookCard}>
+      <div className={styles.bookCard} onClick={handleClick}>
         <div className={styles.bookCover}>
           <img src={book.image} alt={book.title} />
         </div>

@@ -4,6 +4,7 @@ import com.example.library_management.dto.request.UserUpdateRequest;
 import com.example.library_management.model.User;
 import com.example.library_management.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,10 @@ public class UserController extends AbstractController{
     private UserService userService;
     @GetMapping("")
     public ResponseEntity<?> getCurrentUser(Authentication authentication){
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chưa đăng nhập");
+        }
+
         String username = authentication.getName();
         return ResponseEntity.ok(userService.getUserByUserName(username));
     }
