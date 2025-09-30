@@ -1,9 +1,10 @@
+/* Topbar.module.css */
 .topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 25px;
-  background-color: var(--light-color);
+  background-color: #ffffff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,7 +24,7 @@
   width: 100%;
   padding: 10px 15px;
   padding-left: 40px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #e1e5eb;
   border-radius: 50px;
   font-size: 0.9rem;
   outline: none;
@@ -31,7 +32,7 @@
 }
 
 .searchBar input:focus {
-  border-color: var(--secondary-color);
+  border-color: #4a90e2;
   box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
@@ -48,23 +49,23 @@
   align-items: center;
 }
 
-.userInfo .notifications {
+.notifications {
   margin-right: 20px;
   position: relative;
 }
 
-.userInfo .notifications i {
+.notifications i {
   font-size: 1.2rem;
   cursor: pointer;
   color: #777;
 }
 
-.userInfo .notifications .badge {
+.badge {
   position: absolute;
   top: -5px;
   right: -5px;
-  background-color: var(--accent-color);
-  color: var(--light-color);
+  background-color: #ff6b6b;
+  color: #ffffff;
   font-size: 0.7rem;
   width: 15px;
   height: 15px;

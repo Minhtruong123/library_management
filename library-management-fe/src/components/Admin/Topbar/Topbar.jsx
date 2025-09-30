@@ -1,18 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./Topbar.module.css";
 
 export default function Topbar() {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
-    document.querySelector(".sidebar").classList.toggle("collapsed");
-    document.querySelector(".main-content").classList.toggle("expanded");
-  };
   return (
     <>
       <div className={styles.topbar}>
-        <div className={styles.menuToggle} onClick={toggleSidebar}>
+        <div className={styles.menuToggle}>
           <i className="fas fa-bars"></i>
         </div>
         <div className={styles.searchBar}>

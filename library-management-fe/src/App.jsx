@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import HomePages from "./components/Pages/HomePages";
 import DetailsBook from "./components/Pages/DetailsBook";
@@ -8,15 +8,31 @@ import BookManagement from "./components/Pages/BookManagement";
 import AdminDashboard from "./components/Pages/AdminDashboard";
 import CategoryPage from "./components/Pages/CategoryPage";
 import BooksPage from "./components/Pages/BooksPage";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+
+function RoleRedirect() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role === "ADMIN") {
+      navigate("/dashboard");
+    } else if (role === "USER") {
+      navigate("/");
+    } else {
+      navigate("/auth");
+    }
+  }, [navigate]);
+}
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomePages />} />
+          <Route path="/" element={<RoleRedirect />} />
+          <Route path="/home" element={<HomePages />} />
           <Route path="/book/:id" element={<DetailsBook />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/books" element={<BooksPage />} />

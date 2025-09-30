@@ -37,7 +37,15 @@ export default function Login({ onSwitchToRegister }) {
 
       if (res) {
         login(res.userResponse, res.token);
-        navigate("/");
+        const role = localStorage.getItem("role");
+
+        if (role === "ADMIN") {
+          navigate("/dashboard");
+        } else if (role === "USER") {
+          navigate("/home");
+        } else {
+          navigate("/auth");
+        }
       }
     } catch (err) {
       setError("Sai tài khoản hoặc mật khẩu!");

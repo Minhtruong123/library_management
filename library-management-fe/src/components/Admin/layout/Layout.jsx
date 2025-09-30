@@ -1,16 +1,17 @@
 import React from "react";
-import Sidebar from "./Sidebar/Sidebar";
-import Topbar from "./Topbar/Topbar";
-import Chatbot from "../chatbot/Chatbot";
+import styles from "./Layout.module.css";
+import Sidebar from "../Sidebar/Sidebar";
+import Topbar from "../Topbar/Topbar";
+import Chatbot from "../Chatbot/Chatbot";
 
-export default function Layout({ children }) {
+export default function Layout() {
   return (
     <>
-      <div className="container">
+      <div className={styles.container}>
         <Sidebar />
-        <div className="main-content">
+        <div className={styles.mainContent}>
           <Topbar />
-          <div className="content">{children}</div>
+          <div className={styles.content}>{children}</div>
         </div>
         <Chatbot />
       </div>
