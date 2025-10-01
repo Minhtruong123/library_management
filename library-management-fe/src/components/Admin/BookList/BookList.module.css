@@ -1,0 +1,106 @@
+/* BookList.module.css */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.cardHeader h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.more {
+  color: #4a90e2;
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.more i {
+  margin-left: 5px;
+}
+
+.bookList {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bookList th,
+.bookList td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e1e5eb;
+}
+
+.bookList th {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.bookList tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.available {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.borrowed {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+}
+
+.overdue {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.btnPrimary {
+  background-color: #3a6ea5;
+  color: #ffffff;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background-color: #2a5280;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.btnSecondary:hover {
+  background-color: #dde2e6;
+}

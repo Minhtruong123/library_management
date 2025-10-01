@@ -1,5 +1,9 @@
 import React from "react";
 import StatsCard from "./StatsCard";
+import BookList from "../BookList/BookList";
+import LoanList from "../LoanList/LoanList";
+import Timeline from "../Timeline/Timeline";
+import styles from "./Dashboard.module.css";
 
 export default function Dashboard() {
   const books = [
@@ -110,14 +114,14 @@ export default function Dashboard() {
       </p>
 
       <div className={styles.statsGrid}>
-        <StatCard icon="fas fa-book" value="2,543" label="Tổng số sách" />
-        <StatCard icon="fas fa-users" value="1,249" label="Thành viên" />
-        <StatCard
+        <StatsCard icon="fas fa-book" value="2,543" label="Tổng số sách" />
+        <StatsCard icon="fas fa-users" value="1,249" label="Thành viên" />
+        <StatsCard
           icon="fas fa-exchange-alt"
           value="156"
           label="Sách đang mượn"
         />
-        <StatCard
+        <StatsCard
           icon="fas fa-exclamation-triangle"
           value="24"
           label="Quá hạn"

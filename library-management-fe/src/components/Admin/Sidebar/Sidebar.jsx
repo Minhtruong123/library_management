@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Sidebar.module.css";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../service/AuthContext";
 
 export default function Sidebar({ children }) {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate("/auth");
+  };
   return (
     <>
       <div className={styles.sidebar}>
@@ -13,24 +21,44 @@ export default function Sidebar({ children }) {
           <div className={styles.menuCategory}>Chính</div>
           <ul>
             <li>
-              <a href="#" className={styles.active}>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
                 <i className="fas fa-home"></i> <span>Tổng quan</span>
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="#">
+              <NavLink
+                to="/book-management"
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
                 <i className="fas fa-book"></i> <span>Sách</span>
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="#">
+              <NavLink
+                to="/members-management"
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
                 <i className="fas fa-users"></i> <span>Thành viên</span>
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a href="#">
+              <NavLink
+                to="/borrow-return-management"
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
                 <i className="fas fa-exchange-alt"></i> <span>Mượn trả</span>
-              </a>
+              </NavLink>
             </li>
             <li>
               <a href="#">
@@ -76,9 +104,9 @@ export default function Sidebar({ children }) {
               </a>
             </li>
             <li>
-              <a href="#">
+              <button className={styles.logoutBtn} onClick={handleLogout}>
                 <i className="fas fa-sign-out-alt"></i> <span>Đăng xuất</span>
-              </a>
+              </button>
             </li>
           </ul>
         </div>

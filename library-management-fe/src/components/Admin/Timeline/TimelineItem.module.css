@@ -1,0 +1,36 @@
+/* TimelineItem.module.css */
+.timelineItem {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timelineItem:last-child {
+  margin-bottom: 0;
+}
+
+.timelineItem::before {
+  content: "";
+  position: absolute;
+  left: -30px;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #3a6ea5;
+  border: 2px solid #ffffff;
+}
+
+.time {
+  font-size: 0.8rem;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.activity {
+  font-size: 0.95rem;
+}
+
+.user {
+  font-weight: 500;
+  color: #3a6ea5;
+}

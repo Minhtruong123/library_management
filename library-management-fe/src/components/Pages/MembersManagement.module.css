@@ -1,0 +1,495 @@
+/* Members.module.css */
+.membersContainer {
+  animation: fadeIn 0.5s ease;
+}
+
+.membersHeader {
+  margin-bottom: 25px;
+}
+
+.membersHeader h1 {
+  font-size: 1.8rem;
+  color: var(--dark-color);
+  margin-bottom: 10px;
+}
+
+.membersHeader p {
+  color: var(--gray-color);
+}
+
+.membersControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.searchAndFilter {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.searchBox {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+}
+
+.searchBox i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-color);
+}
+
+.searchBox input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.filterBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filterBox label {
+  font-size: 0.9rem;
+  color: var(--gray-color);
+}
+
+.filterBox select {
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 0.9rem;
+}
+
+.addButton {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.addButton:hover {
+  background-color: #2980b9;
+}
+
+.membersTable {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr 1.5fr 1fr 1fr;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: var(--dark-color);
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 3fr 2fr 1fr 1.5fr 1fr 1fr;
+  padding: 15px 20px;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  transition: var(--transition);
+}
+
+.tableRow:hover {
+  background-color: #f8f9fa;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.memberName {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.memberAvatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--secondary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.id {
+  font-size: 0.8rem;
+  color: var(--gray-color);
+}
+
+.memberContact {
+  font-size: 0.9rem;
+}
+
+.phone {
+  color: var(--gray-color);
+  font-size: 0.85rem;
+  margin-top: 3px;
+}
+
+.memberJoin {
+  font-size: 0.9rem;
+  color: var(--gray-color);
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.active {
+  background-color: rgba(39, 174, 96, 0.1);
+  color: var(--success-color);
+}
+
+.inactive {
+  background-color: rgba(149, 165, 166, 0.1);
+  color: var(--gray-color);
+}
+
+.blocked {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--accent-color);
+}
+
+.memberBooks {
+  text-align: center;
+}
+
+.loanCount {
+  background-color: var(--secondary-color);
+  color: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.noLoans {
+  color: var(--gray-color);
+}
+
+.memberActions {
+  text-align: center;
+}
+
+.actionDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  color: var(--gray-color);
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
+.actionButton:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 180px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 5px;
+  padding: 5px 0;
+}
+
+.dropdownContent a {
+  color: var(--text-color);
+  padding: 10px 15px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.dropdownContent a:hover {
+  background-color: #f8f9fa;
+}
+
+.dangerAction {
+  color: var(--accent-color) !important;
+}
+
+.actionDropdown:hover .dropdownContent {
+  display: block;
+}
+
+.noResults {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gray-color);
+}
+
+.noResults i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.memberStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.statCard {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.statIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background-color: rgba(52, 152, 219, 0.1);
+  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.statInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: var(--gray-color);
+}
+
+/* Form overlay */
+.formOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.addMemberForm {
+  background-color: white;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.3s ease;
+}
+
+.formHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.formHeader h3 {
+  font-size: 1.2rem;
+  color: var(--dark-color);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--gray-color);
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.addMemberForm form {
+  padding: 20px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--dark-color);
+}
+
+.formGroup input,
+.formGroup select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.formActions button {
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+
+.formActions button:first-child {
+  background-color: #f0f0f0;
+  color: var(--text-color);
+}
+
+.submitButton {
+  background-color: var(--secondary-color);
+  color: white !important;
+}
+
+@media (max-width: 1024px) {
+  .tableHeader,
+  .tableRow {
+    grid-template-columns: 3fr 2fr 1fr 1.5fr 0.5fr 0.5fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .membersControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchAndFilter {
+    flex-direction: column;
+  }
+
+  .tableHeader {
+    display: none;
+  }
+
+  .tableRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .tableRow > div {
+    padding: 5px 0;
+  }
+
+  .tableRow > div:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .memberName,
+  .memberContact,
+  .memberJoin,
+  .memberStatus,
+  .memberBooks,
+  .memberActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .memberName::before,
+  .memberContact::before,
+  .memberJoin::before,
+  .memberStatus::before,
+  .memberBooks::before {
+    content: attr(data-label);
+    font-weight: 600;
+  }
+
+  .memberName::before {
+    content: "Tên thành viên";
+  }
+  .memberContact::before {
+    content: "Liên hệ";
+  }
+  .memberJoin::before {
+    content: "Ngày tham gia";
+  }
+  .memberStatus::before {
+    content: "Trạng thái";
+  }
+  .memberBooks::before {
+    content: "Sách mượn";
+  }
+
+  .actionDropdown {
+    margin-left: auto;
+  }
+}

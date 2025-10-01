@@ -4,7 +4,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Topbar from "../Topbar/Topbar";
 import Chatbot from "../Chatbot/Chatbot";
 
-export default function Layout() {
+export default function Layout({ children }) {
   return (
     <>
       <div className={styles.container}>

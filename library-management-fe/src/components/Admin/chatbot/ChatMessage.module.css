@@ -1,0 +1,38 @@
+/* ChatMessage.module.css */
+.message {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.bot {
+  align-items: flex-start;
+}
+
+.message.user {
+  align-items: flex-end;
+}
+
+.bubble {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 0.95rem;
+}
+
+.message.bot .bubble {
+  background-color: #f1f3f4;
+  border-bottom-left-radius: 5px;
+}
+
+.message.user .bubble {
+  background-color: #3a6ea5;
+  color: #ffffff;
+  border-bottom-right-radius: 5px;
+}
+
+.time {
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 5px;
+}

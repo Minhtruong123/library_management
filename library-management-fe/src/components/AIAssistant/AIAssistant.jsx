@@ -34,7 +34,7 @@ export default function AIAssistant({ openChatbot }) {
             </div>
             <div className={styles.aiImage}>
               <img
-                src="https://via.placeholder.com/500x400"
+                src="https://cdn-icons-png.flaticon.com/512/14313/14313824.png"
                 alt="AI Assistant"
               />
             </div>

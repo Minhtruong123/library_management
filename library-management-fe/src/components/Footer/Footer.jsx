@@ -54,8 +54,8 @@ export default function Footer() {
             <div className={styles.footerSection}>
               <h3>Liên hệ</h3>
               <p>
-                <i className="fas fa-map-marker-alt"></i> 123 Đường Sách, Q.1,
-                TP.HCM
+                <i className="fas fa-map-marker-alt"></i> 123 Bạch Đằng, Q.Hải
+                Châu, TP.Đà Nẵng
               </p>
               <p>
                 <i className="fas fa-phone"></i> (028) 1234 5678

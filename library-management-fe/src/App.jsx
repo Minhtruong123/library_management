@@ -4,10 +4,12 @@ import HomePages from "./components/Pages/HomePages";
 import DetailsBook from "./components/Pages/DetailsBook";
 import AuthPage from "./components/Pages/AuthPage";
 import AccountPage from "./components/Pages/AccountPage";
-import BookManagement from "./components/Pages/BookManagement";
 import AdminDashboard from "./components/Pages/AdminDashboard";
 import CategoryPage from "./components/Pages/CategoryPage";
 import BooksPage from "./components/Pages/BooksPage";
+import BookManagement from "./components/Pages/BookManagement";
+import MembersManagement from "./components/Pages/MembersManagement";
+import BorrowReturnManagement from "./components/Pages/BorrowReturnManagement";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -39,7 +41,12 @@ function App() {
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/myaccount" element={<AccountPage />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
-          <Route path="/bookmanagement" element={<BookManagement />} />
+          <Route path="/book-management" element={<BookManagement />} />
+          <Route path="/members-management" element={<MembersManagement />} />
+          <Route
+            path="/borrow-return-management"
+            element={<BorrowReturnManagement />}
+          />
         </Routes>
       </BrowserRouter>
     </>

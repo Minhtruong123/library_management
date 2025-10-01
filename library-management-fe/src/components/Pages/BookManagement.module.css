@@ -1,141 +1,291 @@
-.pageHeader {
+/* BookList.module.css */
+.bookListContainer {
+  padding: 20px 0;
+}
+
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
-.title h1 {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-}
-
-.title p {
-  color: #777;
-}
-
-.pageActions {
-  display: flex;
-  gap: 10px;
-}
-
-.btn {
-  padding: 8px 15px;
+.addButton {
+  background-color: var(--success-color);
+  color: white;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+  font-weight: 500;
+  transition: var(--transition);
 }
 
-.btnPrimary {
-  background-color: var(--primary-color);
-  color: var(--light-color);
+.addButton:hover {
+  background-color: #219653;
+  box-shadow: var(--box-shadow);
 }
 
-.btnPrimary:hover {
-  background-color: #2a5280;
-}
-
-.btnSuccess {
-  background-color: var(--success-color);
-  color: var(--light-color);
-}
-
-.btnSuccess:hover {
-  background-color: #218838;
-}
-
-.btnDanger {
-  background-color: var(--danger-color);
-  color: var(--light-color);
-}
-
-.btnDanger:hover {
-  background-color: #c82333;
-}
-
-.btnSecondary {
-  background-color: #e9ecef;
-  color: #495057;
-}
-
-.btnSecondary:hover {
-  background-color: #dde2e6;
-}
-
-/* Filters */
-.filters {
+.filterContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-bottom: 25px;
-  padding: 20px;
-  background-color: var(--light-color);
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.filterItem {
+.searchBox {
   flex: 1;
-  min-width: 200px;
+  min-width: 300px;
+  position: relative;
 }
 
-.filterItem label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #555;
+.searchBox i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-color);
 }
 
-.filterItem select,
-.filterItem input {
+.searchBox input {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid var(--border-color);
+  padding: 10px 10px 10px 35px;
+  border: 1px solid #e0e0e0;
   border-radius: 5px;
-  font-size: 0.9rem;
-  outline: none;
+  font-size: 1rem;
 }
 
-.filterItem select:focus,
-.filterItem input:focus {
-  border-color: var(--secondary-color);
-}
-
-.filterActions {
+.filterOptions {
   display: flex;
-  align-items: flex-end;
   gap: 10px;
 }
 
+.filterOptions select {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: white;
+  min-width: 150px;
+}
+
+.bookTable {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.bookTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bookTable th {
+  background-color: #f8f9fa;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #444;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.bookTable td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.bookTable tr:hover {
+  background-color: #f8f9fa;
+}
+
+.statusAvailable {
+  color: var(--success-color);
+  background-color: rgba(39, 174, 96, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.statusBorrowed {
+  color: var(--warning-color);
+  background-color: rgba(243, 156, 18, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.actionButton:hover {
+  background-color: #f1f1f1;
+}
+
+.actionButton:nth-child(1):hover {
+  color: var(--secondary-color);
+}
+
+.actionButton:nth-child(2):hover {
+  color: var(--accent-color);
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeInDown 0.3s ease;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modalHeader h2 {
+  font-size: 1.3rem;
+  color: var(--dark-color);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--gray-color);
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  color: var(--accent-color);
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #444;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  border-color: var(--secondary-color);
+  outline: none;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+form {
+  padding: 20px;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancelButton {
+  background-color: #f1f1f1;
+  color: #444;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.cancelButton:hover {
+  background-color: #e0e0e0;
+}
+
+.submitButton {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.submitButton:hover {
+  background-color: #2980b9;
+}
+
 @media (max-width: 768px) {
-  .pageHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
+  .formGrid {
+    grid-template-columns: 1fr;
   }
 
-  .pageActions {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .filters {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .filterActions {
+  .filterOptions {
     flex-direction: column;
     width: 100%;
   }
 
-  .filterActions .btn {
+  .searchBox {
     width: 100%;
   }
 }

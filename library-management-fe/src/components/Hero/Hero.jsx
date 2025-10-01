@@ -8,7 +8,6 @@ export default function Hero() {
       if (searchTerm === "") return;
 
       alert(`Đang tìm kiếm: "${searchTerm}"`);
-      // Thông thường sẽ chuyển hướng: window.location.href = `books.html?search=${encodeURIComponent(searchTerm)}`;
     }
   };
   return (
