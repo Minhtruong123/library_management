@@ -10,4 +10,5 @@ public interface IUserService {
     UserResponse getUserByUserName(String username);
     Optional<UserResponse> getUserById(Integer id);
     UserResponse updateUser(String username, UserUpdateRequest user);
+    Boolean changePassword(String username, String oldPassword, String newPassword);
 }

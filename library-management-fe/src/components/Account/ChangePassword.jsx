@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./ChangePassword.module.css";
+import * as userService from "../../service/userService";
 
 export default function ChangePassword() {
   const [formData, setFormData] = useState({
@@ -107,19 +108,26 @@ export default function ChangePassword() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      console.log("Đổi mật khẩu:", formData);
-      alert("Đổi mật khẩu thành công!");
+      try {
+        const res = await userService.changePassword(
+          formData.currentPassword,
+          formData.newPassword
+        );
+        alert("Đổi mật khẩu thành công!");
 
-      setFormData({
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: "",
-      });
-      setPasswordStrength({ score: 0, feedback: "" });
+        setFormData({
+          currentPassword: "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+        setPasswordStrength({ score: 0, feedback: "" });
+      } catch (error) {
+        alert("Đổi mật khẩu thất bại!");
+      }
     }
   };
 

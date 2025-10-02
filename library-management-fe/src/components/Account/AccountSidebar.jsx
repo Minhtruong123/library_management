@@ -47,7 +47,7 @@ export default function AccountSidebar({ activeSection, setActiveSection }) {
               className={styles.avatar}
             />
           </div>
-          <h3 className={styles.userName}>Nguyễn Văn A</h3>
+          <h3 className={styles.userName}>{currentUser?.fullName}</h3>
           <p className={styles.userId}>ID: TV-2025-1234</p>
           <span className={styles.membershipStatus}>Thành viên vàng</span>
         </div>
@@ -102,7 +102,16 @@ export default function AccountSidebar({ activeSection, setActiveSection }) {
           <h3>Quản lý sách</h3>
           <ul>
             <li>
-              <a href="#">
+              <a
+                href="#"
+                className={
+                  activeSection === "borrowed-books" ? styles.active : ""
+                }
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMenuClick("borrowed-books");
+                }}
+              >
                 <i className="fas fa-book"></i> Sách đang mượn
               </a>
             </li>

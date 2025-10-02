@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -27,6 +28,8 @@ public class UserService implements IUserService {
     IUserRepository userRepository;
     @Autowired
     ICategoryRepository categoryRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Override
     public UserResponse getUserByUserName(String username) {
         return new UserResponse(userRepository.findUserByUsername(username));
@@ -61,5 +64,22 @@ public class UserService implements IUserService {
         }
 
         return new UserResponse(userRepository.save(user));
+    }
+
+    @Override
+    public Boolean changePassword(String username, String oldPassword, String newPassword) {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("Không tìm thấy user");
+        }
+
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            return false;
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return true;
     }
 }

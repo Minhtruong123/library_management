@@ -9,7 +9,7 @@ export default function PersonalInfo() {
     email: "",
     phoneNumber: "",
     dateOfBirth: "",
-    gender: "male",
+    gender: "",
     job: "",
     address: "",
     favoriteCategories: "",
@@ -40,10 +40,22 @@ export default function PersonalInfo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
+      const payload = {
+        address: formData.address || "",
+        dateOfBirth: formData.dateOfBirth ? formData.dateOfBirth : null,
+        email: formData.email,
+        favoriteCategoryIds: [],
+        fullName: formData.fullName,
+        gender: formData.gender ? formData.gender.toUpperCase() : "MALE",
+        image: formData.image,
+        job: formData.job || "",
+        phoneNumber: formData.phoneNumber,
+      };
+      console.log(payload);
 
-      const updatedUser = await userService.updateUser(formData.id, formData);
+      const updatedUser = await userService.updateUser(payload);
 
+      await fetchApi();
       setFormData(updatedUser);
       setIsEditing(false);
       alert("Cập nhật thông tin thành công!");

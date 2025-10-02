@@ -6,6 +6,8 @@ import AccountSidebar from "../Account/AccountSidebar";
 import AccountDashboard from "../Account/AccountDashboard";
 import PersonalInfo from "../Account/PersonalInfo";
 import ChangePassword from "../Account/ChangePassword";
+import BorrowedBooksUser from "../Account/BorrowedBooksUser";
+import BorrowHistory from "../Account/BorrowHistory";
 
 export default function AccountPage() {
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -18,6 +20,10 @@ export default function AccountPage() {
         return <PersonalInfo />;
       case "change-password":
         return <ChangePassword />;
+      case "borrowed-books":
+        return <BorrowedBooksUser />;
+      case "borrow-history":
+        return <BorrowHistory />;
       default:
         return <AccountDashboard />;
     }

@@ -61,9 +61,14 @@ export default function Sidebar({ children }) {
               </NavLink>
             </li>
             <li>
-              <a href="#">
+              <NavLink
+                to="/schedualing-management"
+                className={({ isActive }) =>
+                  isActive ? styles.active : undefined
+                }
+              >
                 <i className="fas fa-calendar-alt"></i> <span>Đặt lịch</span>
-              </a>
+              </NavLink>
             </li>
           </ul>
 

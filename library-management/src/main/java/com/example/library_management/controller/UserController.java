@@ -1,5 +1,6 @@
 package com.example.library_management.controller;
 
+import com.example.library_management.dto.request.ChangePasswordRequest;
 import com.example.library_management.dto.request.UserUpdateRequest;
 import com.example.library_management.model.User;
 import com.example.library_management.service.impl.UserService;
@@ -29,5 +30,21 @@ public class UserController extends AbstractController{
                                         @RequestBody UserUpdateRequest user){
         String username = authentication.getName();
         return ResponseEntity.ok(userService.updateUser(username, user));
+    }
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(Authentication authentication,
+                                            @RequestBody ChangePasswordRequest request){
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chưa đăng nhập");
+        }
+
+        String username = authentication.getName();
+        boolean success = userService.changePassword(username, request.getOldPassword(), request.getNewPassword());
+
+        if (success) {
+            return ResponseEntity.ok("Đổi mật khẩu thành công");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mật khẩu cũ không chính xác");
+        }
     }
 }

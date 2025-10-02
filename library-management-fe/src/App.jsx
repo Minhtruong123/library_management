@@ -10,6 +10,7 @@ import BooksPage from "./components/Pages/BooksPage";
 import BookManagement from "./components/Pages/BookManagement";
 import MembersManagement from "./components/Pages/MembersManagement";
 import BorrowReturnManagement from "./components/Pages/BorrowReturnManagement";
+import SchedualingManagement from "./components/Pages/SchedualingManagement";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -46,6 +47,10 @@ function App() {
           <Route
             path="/borrow-return-management"
             element={<BorrowReturnManagement />}
+          />
+          <Route
+            path="/schedualing-management"
+            element={<SchedualingManagement />}
           />
         </Routes>
       </BrowserRouter>

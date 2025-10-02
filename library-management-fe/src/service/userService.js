@@ -9,9 +9,21 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const updateUser = async (id, updateData) => {
+export const updateUser = async (updateData) => {
   try {
-    await api.put(`/users/${id}`, updateData);
+    await api.put(`/users/me`, updateData);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const changePassword = async (oldPassword, newPassword) => {
+  try {
+    const result = await api.put(`/users/change-password`, {
+      oldPassword,
+      newPassword,
+    });
+    return result.data;
   } catch (error) {
     console.log(error);
   }
